@@ -39,8 +39,7 @@
   "scripts": {
     "build": "bunchee",
     "dev": "bunchee -w",
-    "prepublishOnly": "pnpm run build",
-    "start": "tsx src/index.ts"
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "release-it": "^17.0.0"

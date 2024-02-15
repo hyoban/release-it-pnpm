@@ -8,7 +8,6 @@
     "build": "pnpm --filter \"./packages/**\" -r run build",
     "dev": "pnpm --filter \"./packages/**\" -r run dev",
     "lint": "eslint .",
-    "prepublishOnly": "pnpm run build",
     "test": "vitest",
     "typecheck": "tsc"
   },
