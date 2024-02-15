@@ -5,8 +5,8 @@
   "version": "0.0.0",
   "packageManager": "pnpm@8.15.2",
   "scripts": {
-    "build": "pnpm -r run build",
-    "dev": "pnpm -r run dev",
+    "build": "pnpm --filter \"./packages/**\" -r run build",
+    "dev": "pnpm --filter \"./packages/**\" -r run dev",
     "lint": "eslint .",
     "prepublishOnly": "pnpm run build",
     "test": "vitest",
