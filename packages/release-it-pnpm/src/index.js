@@ -78,7 +78,9 @@ class ReleaseItPnpmPlugin extends Plugin {
         pkg.version = newVersion
         await this.step({
           task: async () => {
-            fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
+            if (this.options['dry-run']) {
+              fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
+            }
           },
           label: 'Bumping version',
           prompt: 'bump',

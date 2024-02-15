@@ -17,6 +17,9 @@ describe('release-it-pnpm', () => {
         warn: args => console.warn(args),
         error: args => console.error(args),
       },
+      shell: {
+        exec: () => {},
+      },
     },
   })
   test('should not throw', () => {
