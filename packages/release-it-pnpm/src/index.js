@@ -7,7 +7,7 @@ import fg from 'fast-glob'
 import { Plugin } from 'release-it'
 import { parse } from 'yaml'
 
-const require = module.createRequire(import.meta.url)
+const req = module.createRequire(import.meta.url)
 
 const prompts = {
   bump: {
@@ -58,7 +58,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     const absPaths = entries.map(entry => path.join(cwd, entry))
     for (const absPath of absPaths) {
-      const pkg = require(absPath)
+      const pkg = req(absPath)
       const version = pkg.version
       const isPrivate = pkg.private
       const name = pkg.name
