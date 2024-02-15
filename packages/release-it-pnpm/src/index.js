@@ -30,6 +30,10 @@ class ReleaseItPnpmPlugin extends Plugin {
     return 'npm'
   }
 
+  getInitialOptions(options) {
+    return options
+  }
+
   async bump(newVersion) {
     const cwd = process.cwd()
     const pnpmWorkspaces = path.join(cwd, 'pnpm-workspace.yaml')
@@ -78,7 +82,7 @@ class ReleaseItPnpmPlugin extends Plugin {
         pkg.version = newVersion
         await this.step({
           task: async () => {
-            if (this.options['dry-run']) {
+            if (!this.options['dry-run']) {
               fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
             }
           },

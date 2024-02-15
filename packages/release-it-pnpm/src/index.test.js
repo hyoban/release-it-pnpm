@@ -6,7 +6,7 @@ import Plugin from './index.js'
 const namespace = 'release-it-pnpm'
 
 describe('release-it-pnpm', () => {
-  const options = { [namespace]: {} }
+  const options = { [namespace]: {}, 'dry-run': true }
   const plugin = factory(Plugin, {
     namespace,
     options,
