@@ -1,7 +1,7 @@
 {
   "name": "release-it-pnpm",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "packageManager": "pnpm@8.15.2",
   "description": "Run release-it with pnpm workspace",
   "author": "Stephen Zhou <hi@hyoban.cc>",
