@@ -58,10 +58,24 @@ class ReleaseItPnpmPlugin extends Plugin {
       const version = pkg.version
       const isPrivate = pkg.private
       const name = pkg.name
-      if (version && version !== newVersion && !isPrivate && name) {
+
+      if (!name) {
+        this.log.info(`Skipping package without name in ${absPath}`)
+        continue
+      }
+
+      if (isPrivate) {
+        this.log.info(`Skipping private package ${name}`)
+        continue
+      }
+
+      if (version && version !== newVersion) {
         this.log.info(`Bumping version for ${name} from ${version} to ${newVersion}`)
         pkg.version = newVersion
         fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
+      }
+      else {
+        this.log.info(`Skipping package ${name} with version ${version}`)
       }
     }
   }
