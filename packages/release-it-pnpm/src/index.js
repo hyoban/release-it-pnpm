@@ -10,6 +10,10 @@ import { parse } from 'yaml'
 const require = module.createRequire(import.meta.url)
 
 const prompts = {
+  bump: {
+    type: 'confirm',
+    message: () => 'Are you sure you want to bump the version for the packages?',
+  },
   publish: {
     type: 'confirm',
     message: () => 'Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)',
@@ -26,7 +30,7 @@ class ReleaseItPnpmPlugin extends Plugin {
     return 'npm'
   }
 
-  bump(newVersion) {
+  async bump(newVersion) {
     const cwd = process.cwd()
     const pnpmWorkspaces = path.join(cwd, 'pnpm-workspace.yaml')
     this.log.info(`Reading workspace config ${pnpmWorkspaces}`)
@@ -70,17 +74,21 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
 
       if (version && version !== newVersion) {
-        this.log.info(`Bumping version for ${name} from ${version} to ${newVersion}`)
+        this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
         pkg.version = newVersion
-        fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
+        await this.step({
+          task: async () => {
+            fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
+          },
+          label: 'Bumping version',
+          prompt: 'bump',
+        })
       }
       else {
         this.log.info(`Skipping package ${name} with version ${version}`)
       }
     }
-  }
 
-  async release() {
     await this.step({
       task: async () => {
         await this.exec('pnpm -r publish --access public --no-git-checks')

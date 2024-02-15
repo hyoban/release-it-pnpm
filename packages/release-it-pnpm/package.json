@@ -1,0 +1,55 @@
+{
+  "name": "release-it-pnpm",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.15.2",
+  "description": "Run release-it with pnpm workspace",
+  "author": "Stephen Zhou <hi@hyoban.cc>",
+  "license": "MIT",
+  "homepage": "https://github.com/hyoban/release-it-pnpm#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyoban/release-it-pnpm.git",
+    "directory": "packages/release-it-pnpm"
+  },
+  "bugs": "https://github.com/hyoban/release-it-pnpm/issues",
+  "keywords": [
+    "release",
+    "release-it",
+    "release-it-plugin"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bunchee",
+    "dev": "bunchee -w",
+    "prepublishOnly": "pnpm run build",
+    "start": "tsx src/index.ts"
+  },
+  "peerDependencies": {
+    "release-it": "^17.0.0"
+  },
+  "devDependencies": {
+    "release-it": "^17.0.5",
+    "sinon": "^17.0.1"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "yaml": "^2.3.4"
+  }
+}
