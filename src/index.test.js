@@ -7,7 +7,18 @@ const namespace = 'release-it-pnpm'
 
 describe('release-it-pnpm', () => {
   const options = { [namespace]: {} }
-  const plugin = factory(Plugin, { namespace, options })
+  const plugin = factory(Plugin, {
+    namespace,
+    options,
+    container: {
+      log: {
+        // eslint-disable-next-line no-console
+        info: args => console.log(args),
+        warn: args => console.warn(args),
+        error: args => console.error(args),
+      },
+    },
+  })
   test('should not throw', () => {
     expect(() => runTasks(plugin)).not.toThrow()
   })

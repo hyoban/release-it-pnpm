@@ -85,6 +85,7 @@
     "vitest": "^1.2.2"
   },
   "dependencies": {
-    "fast-glob": "^3.3.2"
+    "fast-glob": "^3.3.2",
+    "yaml": "^2.3.4"
   }
 }
