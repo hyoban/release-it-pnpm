@@ -7,36 +7,6 @@ settings:
 importers:
 
   .:
-    devDependencies:
-      '@types/node':
-        specifier: ^20.11.19
-        version: 20.11.19
-      bunchee:
-        specifier: ^4.4.6
-        version: 4.4.6(typescript@5.3.3)
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      eslint-config-hyoban:
-        specifier: ^0.1.6
-        version: 0.1.6(@typescript-eslint/parser@7.0.1)(eslint@8.56.0)(typescript@5.3.3)
-      tsx:
-        specifier: ^4.7.1
-        version: 4.7.1
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-      vitest:
-        specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.19)
-
-  examples/demo1:
-    devDependencies:
-      vite:
-        specifier: ^5.1.3
-        version: 5.1.3(@types/node@20.11.19)
-
-  packages/release-it-pnpm:
     dependencies:
       conventional-changelog:
         specifier: ^5.1.0
@@ -54,12 +24,33 @@ importers:
         specifier: ^2.3.4
         version: 2.3.4
     devDependencies:
+      '@types/node':
+        specifier: ^20.11.19
+        version: 20.11.19
+      bunchee:
+        specifier: ^4.4.6
+        version: 4.4.6(typescript@5.3.3)
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      eslint-config-hyoban:
+        specifier: ^0.1.6
+        version: 0.1.6(@typescript-eslint/parser@7.0.1)(eslint@8.56.0)(typescript@5.3.3)
       release-it:
         specifier: ^17.0.5
         version: 17.0.5(typescript@5.3.3)
       sinon:
         specifier: ^17.0.1
         version: 17.0.1
+      tsx:
+        specifier: ^4.7.1
+        version: 4.7.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+      vitest:
+        specifier: ^1.2.2
+        version: 1.2.2(@types/node@20.11.19)
 
   playground:
     devDependencies:
