@@ -46,11 +46,15 @@ class ReleaseItPnpmPlugin extends Plugin {
 
   getInitialOptions(options, pluginName) {
     return Object.assign({}, options[pluginName], {
-      'dry-run': options.dryRun,
+      'dry-run': options['dry-run'],
     })
   }
 
   async init() {
+    const rootPkg = readJSON(path.resolve(MANIFEST_PATH))
+    const name = rootPkg.name
+    this.setContext({ name })
+
     const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
     const workspaceInfo = parse(content)
     const packages = workspaceInfo.packages
@@ -85,6 +89,10 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
     this.log.info(`Detected pnpm-workspace.yaml with ${updates.length} packages`)
     this.setContext({ updates })
+  }
+
+  getName() {
+    return this.getContext('name')
   }
 
   async bump(newVersion) {
