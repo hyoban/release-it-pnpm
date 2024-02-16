@@ -49,12 +49,9 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   getInitialOptions(options, pluginName) {
-    const tagName = options.git ? options.git.tagName : null
-
     return Object.assign({}, options[pluginName], {
       'dry-run': options['dry-run'],
       'preRelease': options.preRelease,
-      'tagPrefix': tagName ? tagName.replace(/v?\${version}$/, '') : '',
     })
   }
 
