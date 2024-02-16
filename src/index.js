@@ -116,16 +116,20 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     for (const update of updates) {
       const { entry, name, version } = update
-      const pkg = readJSON(entry)
 
       if (version === newVersion) {
         continue
       }
 
       this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
-      pkg.version = newVersion
+
       if (!this.options['dry-run']) {
-        fs.writeFileSync(entry, JSON.stringify(pkg, null, 2))
+        const pkg = fs.readFileSync(entry, 'utf8')
+        const updatedPkg = pkg.replace(
+          /"version":\s*".*"/,
+          `"version": "${newVersion}"`,
+        )
+        fs.writeFileSync(entry, updatedPkg)
       }
     }
 
