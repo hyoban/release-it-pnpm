@@ -84,10 +84,10 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Setup
-        run: npm i -g @antfu/ni release-it release-it-pnpm
+        run: npm i -g release-it release-it-pnpm
 
       - name: Install
-        run: nci
+        run: pnpm install --frozen-lockfile
 
       - name: Release
         run: release-it --verbose
