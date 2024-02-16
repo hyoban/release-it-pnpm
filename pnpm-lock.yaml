@@ -20,6 +20,9 @@ importers:
       semver:
         specifier: ^7.6.0
         version: 7.6.0
+      should-semantic-release:
+        specifier: ^0.2.1
+        version: 0.2.1
       yaml:
         specifier: ^2.3.4
         version: 2.3.4
@@ -536,8 +539,6 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
     requiresBuild: true
-    dev: true
-    optional: true
 
   /@pkgr/core@0.1.1:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
@@ -1057,8 +1058,8 @@ packages:
     resolution: {integrity: sha512-OLvgeBv3vXlnnJGIAgCLYKjgMEU+wBGj07MQ/nxAaON+3mLzX7mJbhRYrVGiVvFiXtwFlkcBa/TtmglHy0UbzQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
-      '@typescript-eslint/parser': '>=7.0.1'
-      eslint: '>=8.56.0'
+      '@typescript-eslint/parser': ^7.0.0
+      eslint: ^8.56.0
       typescript: '*'
     peerDependenciesMeta:
       typescript:
@@ -4797,6 +4798,15 @@ packages:
       interpret: 1.4.0
       rechoir: 0.6.2
     dev: true
+
+  /should-semantic-release@0.2.1:
+    resolution: {integrity: sha512-YZ4woZpk11mIj1Aq4I70w6Rm4oOWqMqROHdZuX08nT2JADuW12vb6S5GFtQd+lUdedYbmI6WInD8dF4zuq1a1Q==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dependencies:
+      '@pkgjs/parseargs': 0.11.0
+      conventional-commits-parser: 5.0.0
+    dev: false
 
   /side-channel@1.0.5:
     resolution: {integrity: sha512-QcgiIWV4WV7qWExbN5llt6frQB/lBven9pqliLXfGPB+K9ZYXxDozp0wLkHS24kWCm+6YXH/f0HhnObZnZOBnQ==}

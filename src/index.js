@@ -5,6 +5,7 @@ import conventionalRecommendedBump from 'conventional-recommended-bump'
 import fg from 'fast-glob'
 import { Plugin } from 'release-it'
 import semver from 'semver'
+import { shouldSemanticRelease } from 'should-semantic-release'
 import { parse } from 'yaml'
 
 function hasAccess(path) {
@@ -143,6 +144,10 @@ class ReleaseItPnpmPlugin extends Plugin {
   async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
     this.debug({ latestVersion, increment, isPreRelease, preReleaseId })
     // we don not respect the increment option, only prerelease related options are respected
+    const { version } = this.getContext()
+    if (version) {
+      this.setContext({ version: null })
+    }
     try {
       const result = await conventionalRecommendedBump({
         preset: {
@@ -151,6 +156,14 @@ class ReleaseItPnpmPlugin extends Plugin {
         },
       })
       this.debug({ result })
+
+      if (
+        result.releaseType === 'patch'
+        && !await shouldSemanticRelease({ verbose: false })
+      ) {
+        return null
+      }
+
       let { releaseType } = result
       if (isPreRelease) {
         const type
