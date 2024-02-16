@@ -1,8 +1,10 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+import conventionalRecommendedBump from 'conventional-recommended-bump'
 import fg from 'fast-glob'
 import { Plugin } from 'release-it'
+import semver from 'semver'
 import { parse } from 'yaml'
 
 function hasAccess(path) {
@@ -38,7 +40,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   static disablePlugin() {
-    return 'npm'
+    return ['npm', 'version']
   }
 
   constructor(...args) {
@@ -47,9 +49,12 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   getInitialOptions(options, pluginName) {
+    const tagName = options.git ? options.git.tagName : null
+
     return Object.assign({}, options[pluginName], {
       'dry-run': options['dry-run'],
       'preRelease': options.preRelease,
+      'tagPrefix': tagName ? tagName.replace(/v?\${version}$/, '') : '',
     })
   }
 
@@ -125,6 +130,54 @@ class ReleaseItPnpmPlugin extends Plugin {
       label: 'Publishing packages',
       prompt: 'publish',
     })
+  }
+
+  async getRecommendedVersion({ increment, latestVersion, isPreRelease, preReleaseId }) {
+    const { version } = this.getContext()
+    if (version)
+      return version
+    const { options } = this
+    this.debug({ increment, latestVersion, isPreRelease, preReleaseId })
+    this.debug('conventionalRecommendedBump', { options })
+    try {
+      const result = await conventionalRecommendedBump({
+        preset: { name: 'conventionalcommits' },
+      })
+      this.debug({ result })
+      let { releaseType } = result
+      if (increment) {
+        this.log.warn(`The recommended bump is "${releaseType}", but is overridden with "${increment}".`)
+        releaseType = increment
+      }
+      if (increment && semver.valid(increment)) {
+        return increment
+      }
+      else if (isPreRelease) {
+        const type
+          = releaseType && (options.strictSemVer || !semver.prerelease(latestVersion))
+            ? `pre${releaseType}`
+            : 'prerelease'
+        return semver.inc(latestVersion, type, preReleaseId)
+      }
+      else if (releaseType) {
+        return semver.inc(latestVersion, releaseType, preReleaseId)
+      }
+      else {
+        return null
+      }
+    }
+    catch (err) {
+      this.debug({ err })
+      throw err
+    }
+  }
+
+  getIncrementedVersion(options) {
+    return this.getRecommendedVersion(options)
+  }
+
+  getIncrementedVersionCI(options) {
+    return this.getIncrementedVersion(options)
   }
 }
 
