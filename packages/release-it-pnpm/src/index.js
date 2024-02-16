@@ -20,13 +20,15 @@ const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'))
 const prompts = {
   publish: {
     type: 'confirm',
-    message: () => 'Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)',
+    message: context => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks --tag ${context['index'].tag})`,
   },
 }
 
 const MANIFEST_PATH = './package.json'
 const MANIFEST_LOCK_PATH = './pnpm-lock.yaml'
 const MANIFEST_WORKSPACE_PATH = './pnpm-workspace.yaml'
+
+const DEFAULT_TAG = 'latest'
 
 class ReleaseItPnpmPlugin extends Plugin {
   static isEnabled() {
@@ -47,6 +49,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   getInitialOptions(options, pluginName) {
     return Object.assign({}, options[pluginName], {
       'dry-run': options['dry-run'],
+      'preRelease': options.preRelease,
     })
   }
 
@@ -113,9 +116,12 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
     }
 
+    const tag = this.options.preRelease || DEFAULT_TAG
+    this.setContext({ tag })
+
     await this.step({
       task: async () => {
-        await this.exec('pnpm -r publish --access public --no-git-checks')
+        await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
       },
       label: 'Publishing packages',
       prompt: 'publish',
