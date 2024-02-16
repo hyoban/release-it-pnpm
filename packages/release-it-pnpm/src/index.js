@@ -36,7 +36,6 @@ class ReleaseItPnpmPlugin extends Plugin {
   static isEnabled() {
     return hasAccess(MANIFEST_PATH)
       && hasAccess(MANIFEST_LOCK_PATH)
-      && hasAccess(MANIFEST_WORKSPACE_PATH)
   }
 
   static disablePlugin() {
@@ -60,36 +59,48 @@ class ReleaseItPnpmPlugin extends Plugin {
     const name = rootPkg.name
     this.setContext({ name })
 
-    const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
-    const workspaceInfo = parse(content)
-
-    const packages = workspaceInfo.packages
-    if (!packages || !Array.isArray(packages))
-      throw new Error('Invalid pnpm-workspace.yaml: packages field is missing or not an array')
-
-    const entries = fg.globSync(
-      packages.map(pkg => `${pkg}${MANIFEST_PATH.slice(1)}`),
-      {
-        ignore: ['**/node_modules/**'],
-      },
-    )
-
     const updates = []
 
-    for (const entry of entries) {
-      const {
-        name,
-        version,
-        private: isPrivate,
-      } = readJSON(entry)
-
-      if (!name || isPrivate) {
-        continue
-      }
-
-      updates.push({ entry, name, version })
+    if (!rootPkg.private) {
+      updates.push({
+        entry: MANIFEST_PATH,
+        name: rootPkg.name,
+        version: rootPkg.version,
+        isRoot: true,
+      })
     }
-    this.log.info(`Detected pnpm-workspace.yaml with ${updates.length} packages`)
+
+    if (hasAccess(MANIFEST_WORKSPACE_PATH)) {
+      const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
+      const workspaceInfo = parse(content)
+
+      const packages = workspaceInfo.packages
+      if (!packages || !Array.isArray(packages))
+        throw new Error('Invalid pnpm-workspace.yaml: packages field is missing or not an array')
+
+      const entries = fg.globSync(
+        packages.map(pkg => `${pkg}${MANIFEST_PATH.slice(1)}`),
+        {
+          ignore: ['**/node_modules/**'],
+        },
+      )
+
+      for (const entry of entries) {
+        const {
+          name,
+          version,
+          private: isPrivate,
+        } = readJSON(entry)
+
+        if (!name || isPrivate) {
+          continue
+        }
+
+        updates.push({ entry, name, version })
+      }
+    }
+
+    this.log.info(`Found ${updates.length} packages to update`)
     this.setContext({ updates })
   }
 
