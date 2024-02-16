@@ -46,7 +46,7 @@
   },
   "release-it": {
     "plugins": {
-      "./packages/release-it-pnpm/src/index.js": {}
+      "./src/index.js": {}
     },
     "git": {
       "commitMessage": "chore: release v${version}"
