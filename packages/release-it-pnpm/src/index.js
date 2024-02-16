@@ -1,97 +1,107 @@
 import fs from 'node:fs'
-import module from 'node:module'
 import path from 'node:path'
-import process from 'node:process'
 
 import fg from 'fast-glob'
 import { Plugin } from 'release-it'
 import { parse } from 'yaml'
 
-const req = module.createRequire(import.meta.url)
+function hasAccess(path) {
+  try {
+    fs.accessSync(path)
+    return true
+  }
+  catch {
+    return false
+  }
+}
+
+const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'))
 
 const prompts = {
-  bump: {
-    type: 'confirm',
-    message: () => 'Are you sure you want to bump the version for the packages?',
-  },
   publish: {
     type: 'confirm',
     message: () => 'Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)',
   },
 }
 
+const MANIFEST_PATH = './package.json'
+const MANIFEST_LOCK_PATH = './pnpm-lock.yaml'
+const MANIFEST_WORKSPACE_PATH = './pnpm-workspace.yaml'
+
 class ReleaseItPnpmPlugin extends Plugin {
-  constructor(...args) {
-    super(...args)
-    this.registerPrompts(prompts)
+  static isEnabled() {
+    return hasAccess(MANIFEST_PATH)
+      && hasAccess(MANIFEST_LOCK_PATH)
+      && hasAccess(MANIFEST_WORKSPACE_PATH)
   }
 
   static disablePlugin() {
     return 'npm'
   }
 
-  getInitialOptions(options) {
-    return options
+  constructor(...args) {
+    super(...args)
+    this.registerPrompts(prompts)
   }
 
-  async bump(newVersion) {
-    const cwd = process.cwd()
-    const pnpmWorkspaces = path.join(cwd, 'pnpm-workspace.yaml')
-    this.log.info(`Reading workspace config ${pnpmWorkspaces}`)
+  getInitialOptions(options, pluginName) {
+    return Object.assign({}, options[pluginName], {
+      'dry-run': options.dryRun,
+    })
+  }
 
-    if (!fs.existsSync(pnpmWorkspaces)) {
-      this.log.info('No pnpm-workspace.yaml found, skipping pnpm version bump')
-      return
-    }
-
-    const content = fs.readFileSync(pnpmWorkspaces, 'utf8')
-    const workspace = parse(content)
-    const packages = workspace.packages
-    if (!packages || !Array.isArray(packages)) {
-      this.log.warn('No packages found in pnpm-workspace.yaml')
-      return
-    }
+  async init() {
+    const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
+    const workspaceInfo = parse(content)
+    const packages = workspaceInfo.packages
+    if (!packages || !Array.isArray(packages))
+      return false
 
     const entries = fg.globSync(
-      packages.map(pkg => `${pkg}/package.json`),
+      packages.map(pkg => `${pkg}${MANIFEST_PATH.slice(1)}`),
       {
         ignore: ['**/node_modules/**'],
       },
     )
-    this.log.info(`Detected pnpm-workspace.yaml with ${entries.length} packages`)
 
-    const absPaths = entries.map(entry => path.join(cwd, entry))
-    for (const absPath of absPaths) {
-      const pkg = req(absPath)
-      const version = pkg.version
-      const isPrivate = pkg.private
-      const name = pkg.name
+    if (entries.length === 0) {
+      return false
+    }
 
-      if (!name) {
-        this.log.info(`Skipping package without name in ${absPath}`)
+    const updates = []
+
+    for (const entry of entries) {
+      const {
+        name,
+        version,
+        private: isPrivate,
+      } = readJSON(entry)
+
+      if (!name || isPrivate) {
         continue
       }
 
-      if (isPrivate) {
-        this.log.info(`Skipping private package ${name}`)
+      updates.push({ entry, name, version })
+    }
+    this.log.info(`Detected pnpm-workspace.yaml with ${updates.length} packages`)
+    this.setContext({ updates })
+  }
+
+  async bump(newVersion) {
+    const { updates } = this.getContext()
+
+    for (const update of updates) {
+      const { entry, name, version } = update
+      const pkg = readJSON(entry)
+
+      if (version === newVersion) {
         continue
       }
 
-      if (version && version !== newVersion) {
-        this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
-        pkg.version = newVersion
-        await this.step({
-          task: async () => {
-            if (!this.options['dry-run']) {
-              fs.writeFileSync(absPath, JSON.stringify(pkg, null, 2))
-            }
-          },
-          label: 'Bumping version',
-          prompt: 'bump',
-        })
-      }
-      else {
-        this.log.info(`Skipping package ${name} with version ${version}`)
+      this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
+      pkg.version = newVersion
+      if (!this.options['dry-run']) {
+        fs.writeFileSync(entry, JSON.stringify(pkg, null, 2))
       }
     }
 
