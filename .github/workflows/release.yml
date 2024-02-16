@@ -6,16 +6,6 @@ permissions:
 
 on:
   workflow_dispatch:
-    inputs:
-      increment:
-        description: "increment (patch, minor, major, '')"
-        required: false
-        default: ""
-
-      preRelease:
-        description: "preRelease (alpha, beta, rc, '')"
-        required: false
-        default: ""
 
 jobs:
   release:
@@ -49,16 +39,8 @@ jobs:
       - name: Install
         run: nci
 
-      - name: Pre Release
-        run: release-it ${{ github.event.inputs.increment }} --verbose --preRelease ${{ github.event.inputs.preRelease }} && changelogithub
-        if: "${{ github.event.inputs.preRelease != '' }}"
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Release
-        run: release-it ${{ github.event.inputs.increment }} --verbose && changelogithub
-        if: "${{ github.event.inputs.preRelease == '' }}"
+        run: release-it --verbose && changelogithub
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
