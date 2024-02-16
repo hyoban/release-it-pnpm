@@ -13,11 +13,7 @@
     "directory": "packages/release-it-pnpm"
   },
   "bugs": "https://github.com/hyoban/release-it-pnpm/issues",
-  "keywords": [
-    "release",
-    "release-it",
-    "release-it-plugin"
-  ],
+  "keywords": ["release", "release-it", "release-it-plugin"],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -32,10 +28,7 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "files": [
-    "dist",
-    "package.json"
-  ],
+  "files": ["dist", "package.json"],
   "scripts": {
     "build": "bunchee",
     "dev": "bunchee -w",
@@ -70,12 +63,12 @@
     "yaml": "^2.3.4"
   },
   "devDependencies": {
-    "release-it": "^17.0.5",
-    "sinon": "^17.0.1",
     "@types/node": "^20.11.19",
     "bunchee": "^4.4.6",
     "eslint": "^8.56.0",
-    "eslint-config-hyoban": "^0.1.6",
+    "eslint-config-hyoban": "^0.1.7",
+    "release-it": "^17.0.5",
+    "sinon": "^17.0.1",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
