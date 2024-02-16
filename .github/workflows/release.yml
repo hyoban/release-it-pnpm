@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
     inputs:
       increment:
-        description: "The release type"
+        description: "increment (patch, minor, major, '')"
         required: false
         default: ""
 
       preRelease:
-        description: "The pre-release type"
+        description: "preRelease (alpha, beta, rc, '')"
         required: false
         default: ""
 
