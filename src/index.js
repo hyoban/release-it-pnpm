@@ -199,6 +199,10 @@ class ReleaseItPnpmPlugin extends Plugin {
   getIncrementedVersionCI(options) {
     return this.getIncrementedVersion(options)
   }
+
+  async publish() {
+    await this.exec('npx changelogithub')
+  }
 }
 
 export default ReleaseItPnpmPlugin

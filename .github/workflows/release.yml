@@ -34,13 +34,13 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Setup
-        run: npm i -g @antfu/ni release-it changelogithub
+        run: npm i -g @antfu/ni release-it
 
       - name: Install
         run: nci
 
       - name: Release
-        run: release-it --verbose && changelogithub
+        run: release-it --verbose
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
