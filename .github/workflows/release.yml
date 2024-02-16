@@ -11,20 +11,11 @@ on:
         description: "The release type"
         required: false
         default: ""
-        type: choice
-        options:
-          - "major"
-          - "minor"
-          - "patch"
+
       preRelease:
         description: "The pre-release type"
         required: false
         default: ""
-        type: choice
-        options:
-          - "alpha"
-          - "beta"
-          - "rc"
 
 jobs:
   release:
