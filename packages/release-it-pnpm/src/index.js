@@ -132,40 +132,32 @@ class ReleaseItPnpmPlugin extends Plugin {
     })
   }
 
-  async getRecommendedVersion({ increment, latestVersion, isPreRelease, preReleaseId }) {
-    const { version } = this.getContext()
-    if (version)
-      return version
-    const { options } = this
-    this.debug({ increment, latestVersion, isPreRelease, preReleaseId })
-    this.debug('conventionalRecommendedBump', { options })
+  async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
+    this.debug({ latestVersion, increment, isPreRelease, preReleaseId })
+    // we don not respect the increment option, only prerelease related options are respected
     try {
       const result = await conventionalRecommendedBump({
         preset: {
           name: 'conventionalcommits',
-          preMajor: options.preMajor ?? semver.lt(latestVersion, '1.0.0'),
+          preMajor: this.options.preMajor ?? semver.lt(latestVersion, '1.0.0'),
         },
       })
       this.debug({ result })
       let { releaseType } = result
-      if (increment) {
-        this.log.warn(`The recommended bump is "${releaseType}", but is overridden with "${increment}".`)
-        releaseType = increment
-      }
-      if (increment && semver.valid(increment)) {
-        return increment
-      }
-      else if (isPreRelease) {
+      if (isPreRelease) {
         const type
-          = releaseType && (options.strictSemVer || !semver.prerelease(latestVersion))
+          = releaseType && !semver.prerelease(latestVersion)
             ? `pre${releaseType}`
             : 'prerelease'
+        this.debug({ inc: { latestVersion, type, preReleaseId } })
         return semver.inc(latestVersion, type, preReleaseId)
       }
       else if (releaseType) {
+        this.debug({ inc: { latestVersion, releaseType, preReleaseId } })
         return semver.inc(latestVersion, releaseType, preReleaseId)
       }
       else {
+        this.debug({ inc: null })
         return null
       }
     }
