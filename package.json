@@ -13,11 +13,7 @@
     "directory": "packages/release-it-pnpm"
   },
   "bugs": "https://github.com/hyoban/release-it-pnpm/issues",
-  "keywords": [
-    "release",
-    "release-it",
-    "release-it-plugin"
-  ],
+  "keywords": ["release", "release-it", "release-it-plugin"],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -32,10 +28,7 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "files": [
-    "dist",
-    "package.json"
-  ],
+  "files": ["dist", "package.json"],
   "scripts": {
     "build": "bunchee",
     "dev": "bunchee -w",
