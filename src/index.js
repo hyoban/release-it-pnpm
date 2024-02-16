@@ -25,6 +25,10 @@ const prompts = {
     type: 'confirm',
     message: context => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks --tag ${context['index'].tag})`,
   },
+  release: {
+    type: 'confirm',
+    message: 'Are you sure you want to create a new release on GitHub?',
+  },
 }
 
 const MANIFEST_PATH = './package.json'
@@ -200,8 +204,14 @@ class ReleaseItPnpmPlugin extends Plugin {
     return this.getIncrementedVersion(options)
   }
 
-  async publish() {
-    await this.exec('npx changelogithub')
+  async release() {
+    await this.step({
+      task: async () => {
+        await this.exec('npx changelogithub')
+      },
+      label: 'Creating release on GitHub',
+      prompt: 'release',
+    })
   }
 }
 
