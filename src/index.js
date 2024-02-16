@@ -150,12 +150,12 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
-    this.debug({ latestVersion, increment, isPreRelease, preReleaseId })
-    // we don not respect the increment option, only prerelease related options are respected
+    this.debug({ increment, latestVersion, isPreRelease, preReleaseId })
     const { version } = this.getContext()
-    if (version) {
-      this.setContext({ version: null })
-    }
+    if (version)
+      return version
+    const { options } = this
+    this.debug('conventionalRecommendedBump', { options })
     try {
       const result = await conventionalRecommendedBump({
         preset: {
@@ -164,6 +164,14 @@ class ReleaseItPnpmPlugin extends Plugin {
         },
       })
       this.debug({ result })
+      let { releaseType } = result
+      if (increment) {
+        this.log.warn(`The recommended bump is "${releaseType}", but is overridden with "${increment}".`)
+        releaseType = increment
+      }
+      if (increment && semver.valid(increment)) {
+        return increment
+      }
 
       if (
         result.releaseType === 'patch'
@@ -171,8 +179,6 @@ class ReleaseItPnpmPlugin extends Plugin {
       ) {
         return null
       }
-
-      let { releaseType } = result
       if (isPreRelease) {
         const type
           = releaseType && !semver.prerelease(latestVersion)
@@ -181,14 +187,12 @@ class ReleaseItPnpmPlugin extends Plugin {
         this.debug({ inc: { latestVersion, type, preReleaseId } })
         return semver.inc(latestVersion, type, preReleaseId)
       }
-      else if (releaseType) {
+      if (releaseType) {
         this.debug({ inc: { latestVersion, releaseType, preReleaseId } })
         return semver.inc(latestVersion, releaseType, preReleaseId)
       }
-      else {
-        this.debug({ inc: null })
-        return null
-      }
+      this.debug({ inc: null })
+      return null
     }
     catch (err) {
       this.debug({ err })
@@ -209,7 +213,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       task: async () => {
         await this.exec('npx changelogithub')
       },
-      label: 'Creating release on GitHub',
+      label: 'Creating release on GitHub (npx changelogithub)',
       prompt: 'release',
     })
   }
