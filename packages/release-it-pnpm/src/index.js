@@ -141,7 +141,10 @@ class ReleaseItPnpmPlugin extends Plugin {
     this.debug('conventionalRecommendedBump', { options })
     try {
       const result = await conventionalRecommendedBump({
-        preset: { name: 'conventionalcommits' },
+        preset: {
+          name: 'conventionalcommits',
+          preMajor: semver.lt(latestVersion, '1.0.0'),
+        },
       })
       this.debug({ result })
       let { releaseType } = result
