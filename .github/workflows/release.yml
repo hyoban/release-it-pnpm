@@ -9,8 +9,8 @@ on:
     inputs:
       increment:
         description: "The release type"
-        required: true
-        default: "patch"
+        required: false
+        default: ""
         type: choice
         options:
           - "major"
@@ -18,14 +18,13 @@ on:
           - "patch"
       preRelease:
         description: "The pre-release type"
-        required: true
-        default: "not"
+        required: false
+        default: ""
         type: choice
         options:
           - "alpha"
           - "beta"
           - "rc"
-          - "not"
 
 jobs:
   release:
@@ -61,14 +60,14 @@ jobs:
 
       - name: Pre Release
         run: release-it ${{ github.event.inputs.increment }} --verbose --preRelease ${{ github.event.inputs.preRelease }} && changelogithub
-        if: "${{ github.event.inputs.preRelease != 'not' }}"
+        if: "${{ github.event.inputs.preRelease != '' }}"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Release
         run: release-it ${{ github.event.inputs.increment }} --verbose && changelogithub
-        if: "${{ github.event.inputs.preRelease == 'not' }}"
+        if: "${{ github.event.inputs.preRelease == '' }}"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
