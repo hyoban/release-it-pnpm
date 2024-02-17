@@ -16,6 +16,7 @@ Run release-it with pnpm workspace
 ## What it does
 
 1. Disable built-in `npm` and `version` plugins
+1. guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 1. Provide recommended version automatically
    1. support `preMajor` option
 1. Bump all packages to the new version
