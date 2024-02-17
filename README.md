@@ -15,12 +15,13 @@ Run release-it with pnpm workspace
 
 ## What it does
 
-1. Disable built-in `npm` and `version` plugins
-1. guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
+1. Disable built-in `npm`, `version`, `github` plugins
+1. Guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog))
    1. support `preMajor` option
 1. Bump all packages to the new version
 1. Run `pnpm -r publish --access public --no-git-checks --tag ${tag}`
+1. Run `npx changelogithub` for github release
 
 ## Example
 

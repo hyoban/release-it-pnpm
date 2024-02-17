@@ -44,7 +44,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   static disablePlugin() {
-    return ['npm', 'version']
+    return ['npm', 'version', 'github']
   }
 
   constructor(...args) {
