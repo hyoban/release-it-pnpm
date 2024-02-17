@@ -10,8 +10,8 @@ Run release-it with pnpm workspace
 
 ## Requirements
 
-1. use pnpm
-1. use conventional commit
+1. use pnpm and set `"packageManager": "pnpm@8.15.3",` in `package.json` correctly
+1. use conventional commit and you don't care about the version number
 
 ## What it does
 
