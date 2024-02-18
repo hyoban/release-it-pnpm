@@ -1,11 +1,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { shouldSemanticRelease } from '@hyoban/should-semantic-release'
 import conventionalRecommendedBump from 'conventional-recommended-bump'
 import fg from 'fast-glob'
 import { Plugin } from 'release-it'
 import semver from 'semver'
+import { shouldSemanticRelease } from 'should-semantic-release'
 import { parse } from 'yaml'
 
 function hasAccess(path) {
