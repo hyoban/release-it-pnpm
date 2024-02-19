@@ -66,14 +66,12 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     const updates = []
 
-    if (!rootPkg.private) {
-      updates.push({
-        entry: MANIFEST_PATH,
-        name: rootPkg.name,
-        version: rootPkg.version,
-        isRoot: true,
-      })
-    }
+    updates.push({
+      entry: MANIFEST_PATH,
+      name: rootPkg.name,
+      version: rootPkg.version,
+      isRoot: true,
+    })
 
     if (hasAccess(MANIFEST_WORKSPACE_PATH)) {
       const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
@@ -91,16 +89,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       )
 
       for (const entry of entries) {
-        const {
-          name,
-          version,
-          private: isPrivate,
-        } = readJSON(entry)
-
-        if (!name || isPrivate) {
-          continue
-        }
-
+        const { name, version } = readJSON(entry)
         updates.push({ entry, name, version })
       }
     }
