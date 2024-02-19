@@ -13,7 +13,11 @@
     "directory": "packages/release-it-pnpm"
   },
   "bugs": "https://github.com/hyoban/release-it-pnpm/issues",
-  "keywords": ["release", "release-it", "release-it-plugin"],
+  "keywords": [
+    "release",
+    "release-it",
+    "release-it-plugin"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -28,7 +32,10 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "files": ["dist", "package.json"],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "build": "bunchee",
     "dev": "bunchee -w",
@@ -56,22 +63,22 @@
     "release-it": "^17.0.0"
   },
   "dependencies": {
-    "should-semantic-release": "^0.3.0",
     "conventional-changelog": "^5.1.0",
     "conventional-recommended-bump": "^9.0.0",
     "fast-glob": "^3.3.2",
     "semver": "^7.6.0",
+    "should-semantic-release": "^0.3.0",
     "yaml": "^2.3.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
-    "bunchee": "^4.4.6",
+    "bunchee": "^4.4.8",
     "eslint": "^8.56.0",
-    "eslint-config-hyoban": "^0.1.7",
-    "release-it": "^17.0.5",
+    "eslint-config-hyoban": "^0.1.10",
+    "release-it": "^17.1.1",
     "sinon": "^17.0.1",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.2"
+    "vitest": "^1.3.0"
   }
 }
