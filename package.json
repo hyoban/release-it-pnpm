@@ -7,11 +7,7 @@
   "author": "Stephen Zhou <hi@hyoban.cc>",
   "license": "MIT",
   "homepage": "https://github.com/hyoban/release-it-pnpm#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hyoban/release-it-pnpm.git",
-    "directory": "packages/release-it-pnpm"
-  },
+  "repository": "hyoban/release-it-pnpm",
   "bugs": "https://github.com/hyoban/release-it-pnpm/issues",
   "keywords": [
     "release",
@@ -40,9 +36,9 @@
     "build": "bunchee",
     "dev": "bunchee -w",
     "lint": "eslint .",
+    "prepublishOnly": "pnpm run build",
     "test": "vitest",
-    "typecheck": "tsc",
-    "prepublishOnly": "pnpm run build"
+    "typecheck": "tsc"
   },
   "release-it": {
     "plugins": {
