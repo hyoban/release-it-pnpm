@@ -95,40 +95,23 @@ class ReleaseItPnpmPlugin extends Plugin {
     return this.getContext('name')
   }
 
-  async bump(newVersion) {
-    const { updates } = this.getContext()
-    if (updates.length === 0)
-      return false
+  getIncrementedVersionCI(options) {
+    return this.getIncrementedVersion(options)
+  }
 
-    for (const update of updates) {
-      const { entry, name, version } = update
-
-      if (version === newVersion) {
-        continue
-      }
-
-      this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
-
-      if (!this.options['dry-run']) {
-        const pkg = fs.readFileSync(entry, 'utf8')
-        const updatedPkg = pkg.replace(
-          /"version":\s*".*"/,
-          `"version": "${newVersion}"`,
-        )
-        fs.writeFileSync(entry, updatedPkg)
-      }
+  async getIncrementedVersion(options) {
+    const tags = await gitSemverTags()
+    const latestTagVersion = tags[0]
+    const { latestVersion } = this.getContext()
+    if (
+      typeof latestVersion === 'string'
+      && semver.valid(latestVersion)
+      && typeof latestTagVersion === 'string'
+      && semver.gt(latestVersion, latestTagVersion)
+    ) {
+      return semver.valid(latestVersion)
     }
-
-    const tag = this.options.preRelease || DEFAULT_TAG
-    this.setContext({ tag })
-
-    await this.step({
-      task: async () => {
-        await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
-      },
-      label: 'Publishing packages',
-      prompt: 'publish',
-    })
+    return this.getRecommendedVersion(options)
   }
 
   async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
@@ -180,23 +163,40 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
   }
 
-  async getIncrementedVersion(options) {
-    const tags = await gitSemverTags()
-    const latestTagVersion = tags[0]
-    const { latestVersion } = this.getContext()
-    if (
-      typeof latestVersion === 'string'
-      && semver.valid(latestVersion)
-      && typeof latestTagVersion === 'string'
-      && semver.gt(latestVersion, latestTagVersion)
-    ) {
-      return semver.valid(latestVersion)
-    }
-    return this.getRecommendedVersion(options)
-  }
+  async bump(newVersion) {
+    const { updates } = this.getContext()
+    if (updates.length === 0)
+      return false
 
-  getIncrementedVersionCI(options) {
-    return this.getIncrementedVersion(options)
+    for (const update of updates) {
+      const { entry, name, version } = update
+
+      if (version === newVersion) {
+        continue
+      }
+
+      this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
+
+      if (!this.options['dry-run']) {
+        const pkg = fs.readFileSync(entry, 'utf8')
+        const updatedPkg = pkg.replace(
+          /"version":\s*".*"/,
+          `"version": "${newVersion}"`,
+        )
+        fs.writeFileSync(entry, updatedPkg)
+      }
+    }
+
+    const tag = this.options.preRelease || DEFAULT_TAG
+    this.setContext({ tag })
+
+    await this.step({
+      task: async () => {
+        await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
+      },
+      label: 'Publishing packages',
+      prompt: 'publish',
+    })
   }
 
   async release() {
