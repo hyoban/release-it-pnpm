@@ -3,6 +3,7 @@ import path from 'node:path'
 
 import conventionalRecommendedBump from 'conventional-recommended-bump'
 import fg from 'fast-glob'
+import gitSemverTags from 'git-semver-tags'
 import { Plugin } from 'release-it'
 import semver from 'semver'
 import { shouldSemanticRelease } from 'should-semantic-release'
@@ -60,18 +61,10 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async init() {
-    const rootPkg = readJSON(path.resolve(MANIFEST_PATH))
-    const name = rootPkg.name
-    this.setContext({ name })
+    const { name, version } = readJSON(path.resolve(MANIFEST_PATH))
+    this.setContext({ name, latestVersion: version })
 
-    const updates = []
-
-    updates.push({
-      entry: MANIFEST_PATH,
-      name: rootPkg.name,
-      version: rootPkg.version,
-      isRoot: true,
-    })
+    const updates = [{ entry: MANIFEST_PATH, name, version, isRoot: true }]
 
     if (hasAccess(MANIFEST_WORKSPACE_PATH)) {
       const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
@@ -153,7 +146,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       const result = await conventionalRecommendedBump({
         preset: {
           name: 'conventionalcommits',
-          preMajor: this.options.preMajor ?? semver.lt(latestVersion, '1.0.0'),
+          preMajor: semver.lt(latestVersion, '1.0.0'),
         },
       })
       this.debug({ result })
@@ -187,7 +180,18 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
   }
 
-  getIncrementedVersion(options) {
+  async getIncrementedVersion(options) {
+    const tags = await gitSemverTags()
+    const latestTagVersion = tags[0]
+    const { latestVersion } = this.getContext()
+    if (
+      typeof latestVersion === 'string'
+      && semver.valid(latestVersion)
+      && typeof latestTagVersion === 'string'
+      && semver.gt(latestVersion, latestTagVersion)
+    ) {
+      return semver.valid(latestVersion)
+    }
     return this.getRecommendedVersion(options)
   }
 
