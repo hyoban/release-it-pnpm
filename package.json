@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.0.0",
   "packageManager": "pnpm@8.15.3",
-  "description": "Run release-it with pnpm workspace",
+  "description": "Run release-it with pnpm",
   "author": "Stephen Zhou <hi@hyoban.cc>",
   "license": "MIT",
   "homepage": "https://github.com/hyoban/release-it-pnpm#readme",

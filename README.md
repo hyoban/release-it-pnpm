@@ -6,12 +6,12 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-Run release-it with pnpm workspace
+Run release-it with pnpm
 
 ## Requirements
 
 - [ ] use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly
-- [ ] use [conventional commit](https://www.conventionalcommits.org) and you don't care about the version number
+- [ ] use [Conventional Commits](https://www.conventionalcommits.org) and follow [Semantic Versioning](https://semver.org)
 
 ## What it does
 
@@ -19,6 +19,7 @@ Run release-it with pnpm workspace
 1. Guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog))
    1. support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option
+   1. override version by manual setting version in `package.json`
 1. Bump all packages to the new version
 1. Run `pnpm -r publish --access public --no-git-checks --tag ${tag}` ([pnpm publish](https://pnpm.io/cli/publish))
 1. Run `npx changelogithub` for github release ([changelogithub](https://github.com/antfu/changelogithub))
