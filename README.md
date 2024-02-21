@@ -6,7 +6,7 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-Run release-it with pnpm
+Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://pnpm.io)
 
 ## Requirements
 
