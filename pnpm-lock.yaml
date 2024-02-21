@@ -51,12 +51,6 @@ importers:
       simple-git-hooks:
         specifier: ^2.9.0
         version: 2.9.0
-      sinon:
-        specifier: ^17.0.1
-        version: 17.0.1
-      tsx:
-        specifier: ^4.7.1
-        version: 4.7.1
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -782,36 +776,6 @@ packages:
   /@sindresorhus/merge-streams@2.2.1:
     resolution: {integrity: sha512-255V7MMIKw6aQ43Wbqp9HZ+VHn6acddERTLiiLnlcPLU9PdTq9Aijl12oklAgUEblLWye+vHLzmqBx6f2TGcZw==}
     engines: {node: '>=18'}
-    dev: true
-
-  /@sinonjs/commons@2.0.0:
-    resolution: {integrity: sha512-uLa0j859mMrg2slwQYdO/AkrOfmH+X6LTVmNTS9CqexuE2IvVORIkSpJLqePAbEnKJ77aMmCwr1NUZ57120Xcg==}
-    dependencies:
-      type-detect: 4.0.8
-    dev: true
-
-  /@sinonjs/commons@3.0.1:
-    resolution: {integrity: sha512-K3mCHKQ9sVh8o1C9cxkwxaOmXoAMlDxC1mYyHrjqOWEcBjYr76t96zL2zlj5dUGZ3HSw240X1qgH3Mjf1yJWpQ==}
-    dependencies:
-      type-detect: 4.0.8
-    dev: true
-
-  /@sinonjs/fake-timers@11.2.2:
-    resolution: {integrity: sha512-G2piCSxQ7oWOxwGSAyFHfPIsyeJGXYtc6mFbnFA+kRXkiEnTl8c/8jul2S329iFBnDI9HGoeWWAZvuvOkZccgw==}
-    dependencies:
-      '@sinonjs/commons': 3.0.1
-    dev: true
-
-  /@sinonjs/samsam@8.0.0:
-    resolution: {integrity: sha512-Bp8KUVlLp8ibJZrnvq2foVhP0IVX2CIprMJPK0vqGqgrDa0OHVKeZyBykqskkrdxV6yKBPmGasO8LVjAKR3Gew==}
-    dependencies:
-      '@sinonjs/commons': 2.0.0
-      lodash.get: 4.4.2
-      type-detect: 4.0.8
-    dev: true
-
-  /@sinonjs/text-encoding@0.7.2:
-    resolution: {integrity: sha512-sXXKG+uL9IrKqViTtao2Ws6dy0znu9sOaP1di/jKGW1M6VssO8vlpXCQcpZ+jisQ1tTFAC5Jo/EOzFbggBagFQ==}
     dev: true
 
   /@stylistic/eslint-plugin-js@1.6.2(eslint@8.56.0):
@@ -2207,11 +2171,6 @@ packages:
   /diff-sequences@29.6.3:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dev: true
-
-  /diff@5.2.0:
-    resolution: {integrity: sha512-uIFDxqpRZGZ6ThOk84hEfqWoHx2devRFvpTZcTHur85vImfaxUbTW9Ryh4CpCuDnToOP1CEtXKIgytHBPVff5A==}
-    engines: {node: '>=0.3.1'}
     dev: true
 
   /dir-glob@3.0.1:
@@ -3883,10 +3842,6 @@ packages:
     engines: {'0': node >= 0.2.0}
     dev: false
 
-  /just-extend@6.2.0:
-    resolution: {integrity: sha512-cYofQu2Xpom82S6qD778jBDpwvvy39s1l/hrYij2u9AMdQcGRpaBu6kY4mVhuno5kJVi1DAz4aiphA2WI1/OAw==}
-    dev: true
-
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
     dependencies:
@@ -3992,10 +3947,6 @@ packages:
 
   /lodash.escaperegexp@4.1.2:
     resolution: {integrity: sha512-TM9YBvyC84ZxE3rgfefxUWiQKLilstD6k7PTGt6wfbtXF8ixIJLOL3VYyV/z+ZiPLsVxAsKAFVwWlWeb2Y8Yyw==}
-    dev: true
-
-  /lodash.get@4.4.2:
-    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
     dev: true
 
   /lodash.isplainobject@4.0.6:
@@ -4218,16 +4169,6 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       type-fest: 2.19.0
-    dev: true
-
-  /nise@5.1.9:
-    resolution: {integrity: sha512-qOnoujW4SV6e40dYxJOb3uvuoPHtmLzIk4TFo+j0jPJoC+5Z9xja5qH5JZobEPsa8+YYphMrOSwnrshEhG2qww==}
-    dependencies:
-      '@sinonjs/commons': 3.0.1
-      '@sinonjs/fake-timers': 11.2.2
-      '@sinonjs/text-encoding': 0.7.2
-      just-extend: 6.2.0
-      path-to-regexp: 6.2.1
     dev: true
 
   /node-domexception@1.0.0:
@@ -4574,10 +4515,6 @@ packages:
     dependencies:
       lru-cache: 10.1.0
       minipass: 7.0.4
-    dev: true
-
-  /path-to-regexp@6.2.1:
-    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
     dev: true
 
   /path-type@4.0.0:
@@ -5162,17 +5099,6 @@ packages:
     requiresBuild: true
     dev: true
 
-  /sinon@17.0.1:
-    resolution: {integrity: sha512-wmwE19Lie0MLT+ZYNpDymasPHUKTaZHUH/pKEubRXIzySv9Atnlw+BUMGCzWgV7b7wO+Hw6f1TEOr0IUnmU8/g==}
-    dependencies:
-      '@sinonjs/commons': 3.0.1
-      '@sinonjs/fake-timers': 11.2.2
-      '@sinonjs/samsam': 8.0.0
-      diff: 5.2.0
-      nise: 5.1.9
-      supports-color: 7.2.0
-    dev: true
-
   /sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: true
@@ -5494,17 +5420,6 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: true
-
-  /tsx@4.7.1:
-    resolution: {integrity: sha512-8d6VuibXHtlN5E3zFkgY8u4DX7Y3Z27zvvPKVmLon/D4AjuKzarkUBTLDBgj9iTQ0hg5xM7c/mYiRVM+HETf0g==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-    dependencies:
-      esbuild: 0.19.10
-      get-tsconfig: 4.7.2
-    optionalDependencies:
-      fsevents: 2.3.3
     dev: true
 
   /type-check@0.4.0:
