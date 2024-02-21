@@ -28,6 +28,9 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
+  "bin": {
+    "index": "./dist/bin/index.js"
+  },
   "files": [
     "dist",
     "package.json"
