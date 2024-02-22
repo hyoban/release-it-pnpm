@@ -8,6 +8,12 @@
 
 Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://pnpm.io)
 
+## Install
+
+```sh
+ni -D release-it release-it-pnpm
+```
+
 ## Requirements
 
 - [ ] use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly
@@ -24,79 +30,10 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 1. Run `pnpm -r publish --access public --no-git-checks --tag ${tag}` ([pnpm publish](https://pnpm.io/cli/publish))
 1. Run `npx changelogithub` for github release ([changelogithub](https://github.com/antfu/changelogithub))
 
-## Example
+## Generate config
 
-`.release-it.json`
-
-```json
-{
-  "release-it": {
-    "plugins": {
-      "release-it-pnpm": {}
-    },
-    "git": {
-      "commitMessage": "chore: release v${version}"
-    },
-    "hooks": {
-      "before:init": [
-        "pnpm run lint",
-        "pnpm run typecheck",
-        "pnpm run test --run"
-      ]
-    }
-  }
-}
-```
-
-`.github/workflows/release.yml`
-
-```yaml
-name: Release
-
-permissions:
-  contents: write
-  id-token: write
-
-on:
-  workflow_dispatch:
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Git config
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-
-      - name: Set node
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-
-      - name: Login to NPM
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Setup
-        run: npm i -g release-it release-it-pnpm
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - name: Release
-        run: release-it --verbose
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+```sh
+npx release-it-pnpm
 ```
 
 <!-- Badges -->
