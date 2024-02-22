@@ -190,23 +190,25 @@ class ReleaseItPnpmPlugin extends Plugin {
     const tag = this.options.preRelease || DEFAULT_TAG
     this.setContext({ tag })
 
-    await this.step({
-      task: async () => {
-        await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
-      },
-      label: 'Publishing packages',
-      prompt: 'publish',
-    })
+    if (!this.options?.disablePublish)
+      await this.step({
+        task: async () => {
+          await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
+        },
+        label: 'Publishing packages',
+        prompt: 'publish',
+      })
   }
 
   async release() {
-    await this.step({
-      task: async () => {
-        await this.exec('npx changelogithub')
-      },
-      label: 'Creating release on GitHub (npx changelogithub)',
-      prompt: 'release',
-    })
+    if (!this.options?.disableRelease)
+      await this.step({
+        task: async () => {
+          await this.exec('npx changelogithub')
+        },
+        label: 'Creating release on GitHub (npx changelogithub)',
+        prompt: 'release',
+      })
   }
 }
 
