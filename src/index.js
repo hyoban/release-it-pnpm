@@ -61,10 +61,10 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async init() {
-    const { name, version } = readJSON(path.resolve(MANIFEST_PATH))
+    const { name, version, private: isPrivate } = readJSON(path.resolve(MANIFEST_PATH))
     this.setContext({ name, latestVersion: version })
 
-    const updates = [{ entry: MANIFEST_PATH, name, version, isRoot: true }]
+    const updates = [{ entry: MANIFEST_PATH, name, version, isPrivate: !!isPrivate }]
 
     if (hasAccess(MANIFEST_WORKSPACE_PATH)) {
       const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
@@ -82,8 +82,8 @@ class ReleaseItPnpmPlugin extends Plugin {
       )
 
       for (const entry of entries) {
-        const { name, version } = readJSON(entry)
-        updates.push({ entry, name, version })
+        const { name, version, private: isPrivate } = readJSON(entry)
+        updates.push({ entry, name, version, isPrivate: !!isPrivate })
       }
     }
 
@@ -190,7 +190,7 @@ class ReleaseItPnpmPlugin extends Plugin {
     const tag = this.options.preRelease || DEFAULT_TAG
     this.setContext({ tag })
 
-    if (!this.options?.disablePublish)
+    if (updates.some(update => !update.isPrivate))
       await this.step({
         task: async () => {
           await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
