@@ -106,8 +106,7 @@ class ReleaseItPnpmPlugin extends Plugin {
     if (
       typeof latestVersion === 'string'
       && semver.valid(latestVersion)
-      && typeof latestTagVersion === 'string'
-      && semver.gt(latestVersion, latestTagVersion)
+      && semver.gt(latestVersion, latestTagVersion ?? '0.0.0')
     ) {
       return semver.valid(latestVersion)
     }
