@@ -24,7 +24,7 @@ const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'))
 const prompts = {
   publish: {
     type: 'confirm',
-    message: context => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks --tag ${context['index'].tag})`,
+    message: context => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks --tag ${context['index']?.tag ?? context.tag})`,
   },
   release: {
     type: 'confirm',
