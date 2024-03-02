@@ -24,7 +24,7 @@ const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'))
 const prompts = {
   publish: {
     type: 'confirm',
-    message: context => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks --tag ${context['index']?.tag ?? context.tag})`,
+    message: `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)`,
   },
   release: {
     type: 'confirm',
@@ -35,8 +35,6 @@ const prompts = {
 const MANIFEST_PATH = './package.json'
 const MANIFEST_LOCK_PATH = './pnpm-lock.yaml'
 const MANIFEST_WORKSPACE_PATH = './pnpm-workspace.yaml'
-
-const DEFAULT_TAG = 'latest'
 
 class ReleaseItPnpmPlugin extends Plugin {
   static isEnabled() {
@@ -186,13 +184,10 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
     }
 
-    const tag = this.options.preRelease || DEFAULT_TAG
-    this.setContext({ tag })
-
     if (updates.some(update => !update.isPrivate))
       await this.step({
         task: async () => {
-          await this.exec(`pnpm -r publish --access public --no-git-checks --tag ${tag}`)
+          await this.exec(`pnpm -r publish --access public --no-git-checks`)
         },
         label: 'Publishing packages',
         prompt: 'publish',
