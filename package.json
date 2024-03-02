@@ -68,7 +68,6 @@
     "fast-glob": "^3.3.2",
     "git-semver-tags": "^7.0.1",
     "semver": "^7.6.0",
-    "should-semantic-release": "^0.3.0",
     "yaml": "^2.3.4"
   },
   "devDependencies": {
