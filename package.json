@@ -2,7 +2,7 @@
   "name": "release-it-pnpm",
   "type": "module",
   "version": "3.0.2",
-  "packageManager": "pnpm@8.15.3",
+  "packageManager": "pnpm@8.15.4",
   "description": "Run release-it with pnpm",
   "author": "Stephen Zhou <hi@hyoban.cc>",
   "license": "MIT",
@@ -68,13 +68,13 @@
     "fast-glob": "^3.3.2",
     "git-semver-tags": "^7.0.1",
     "semver": "^7.6.0",
-    "yaml": "^2.3.4"
+    "yaml": "^2.4.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.19",
+    "@types/node": "^20.11.24",
     "bunchee": "^4.4.8",
-    "eslint": "^8.56.0",
-    "eslint-config-hyoban": "^0.1.16",
+    "eslint": "^8.57.0",
+    "eslint-config-hyoban": "^0.1.24",
     "lint-staged": "^15.2.2",
     "release-it": "^17.1.1",
     "simple-git-hooks": "^2.9.0",

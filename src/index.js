@@ -105,9 +105,9 @@ class ReleaseItPnpmPlugin extends Plugin {
       typeof latestVersion === 'string'
       && semver.valid(latestVersion)
       && semver.gt(latestVersion, latestTagVersion ?? '0.0.0')
-    ) {
+    )
       return semver.valid(latestVersion)
-    }
+
     return this.getRecommendedVersion(options)
   }
 
@@ -135,9 +135,8 @@ class ReleaseItPnpmPlugin extends Plugin {
         this.log.warn(`The recommended bump is "${releaseType}", but is overridden with "${increment}".`)
         releaseType = increment
       }
-      if (increment && semver.valid(increment)) {
+      if (increment && semver.valid(increment))
         return increment
-      }
 
       if (isPreRelease) {
         const type
@@ -168,9 +167,8 @@ class ReleaseItPnpmPlugin extends Plugin {
     for (const update of updates) {
       const { entry, name, version } = update
 
-      if (version === newVersion) {
+      if (version === newVersion)
         continue
-      }
 
       this.log.info(`Package ${name} with version ${version} will be bumped to ${newVersion}`)
 
@@ -184,7 +182,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
     }
 
-    if (updates.some(update => !update.isPrivate))
+    if (updates.some(update => !update.isPrivate)) {
       await this.step({
         task: async () => {
           await this.exec(`pnpm -r publish --access public --no-git-checks`)
@@ -192,10 +190,11 @@ class ReleaseItPnpmPlugin extends Plugin {
         label: 'Publishing packages',
         prompt: 'publish',
       })
+    }
   }
 
   async release() {
-    if (!this.options?.disableRelease)
+    if (!this.options?.disableRelease) {
       await this.step({
         task: async () => {
           await this.exec('npx changelogithub')
@@ -203,6 +202,7 @@ class ReleaseItPnpmPlugin extends Plugin {
         label: 'Creating release on GitHub (npx changelogithub)',
         prompt: 'release',
       })
+    }
   }
 }
 
