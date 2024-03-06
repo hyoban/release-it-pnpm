@@ -22,10 +22,10 @@ ni -D release-it release-it-pnpm
 ## What it does
 
 1. Disable built-in `npm`, `version`, `github` plugins
-1. Guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog))
    1. support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option
    1. override version by manual setting version in `package.json`
+1. When you not in CI, it will use [bumpp](https://github.com/antfu/bumpp) for next version
 1. Bump all packages to the new version
 1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish))
 1. Run `npx changelogithub` for github release ([changelogithub](https://github.com/antfu/changelogithub))
@@ -35,6 +35,8 @@ ni -D release-it release-it-pnpm
 ```sh
 npx release-it-pnpm
 ```
+
+Guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 
 <!-- Badges -->
 
