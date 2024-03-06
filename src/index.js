@@ -93,7 +93,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   getIncrementedVersionCI(options) {
-    return this.getIncrementedVersion(options)
+    return this.getRecommendedVersion(options)
   }
 
   async getIncrementedVersion() {
