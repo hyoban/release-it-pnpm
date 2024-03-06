@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+import { versionBump } from 'bumpp'
 import conventionalRecommendedBump from 'conventional-recommended-bump'
 import fg from 'fast-glob'
 import gitSemverTags from 'git-semver-tags'
@@ -53,6 +54,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   getInitialOptions(options, pluginName) {
     return Object.assign({}, options[pluginName], {
       'dry-run': options['dry-run'],
+      'ci': options.ci,
       'preRelease': options.preRelease,
     })
   }
@@ -96,12 +98,19 @@ class ReleaseItPnpmPlugin extends Plugin {
     return this.getRecommendedVersion(options)
   }
 
-  async getIncrementedVersion() {
-    return null
+  async getIncrementedVersion(options) {
+    return this.getRecommendedVersion(options)
   }
 
   async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
     this.debug({ increment, latestVersion, isPreRelease, preReleaseId })
+    const { options } = this
+    this.debug('conventionalRecommendedBump', { options })
+
+    if (!options.ci) {
+      const result = await versionBump()
+      return semver.valid(result.newVersion)
+    }
 
     const tags = await gitSemverTags()
     const latestTagVersion = tags[0]
@@ -113,8 +122,6 @@ class ReleaseItPnpmPlugin extends Plugin {
     )
       return semver.valid(version)
 
-    const { options } = this
-    this.debug('conventionalRecommendedBump', { options })
     try {
       const result = await conventionalRecommendedBump({
         preset: {

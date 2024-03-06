@@ -63,6 +63,7 @@
     "release-it": "^17.0.0"
   },
   "dependencies": {
+    "bumpp": "^9.4.0",
     "conventional-changelog": "^5.1.0",
     "conventional-recommended-bump": "^9.0.0",
     "fast-glob": "^3.3.2",
