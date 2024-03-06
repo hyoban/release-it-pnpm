@@ -6,7 +6,6 @@ import fg from 'fast-glob'
 import gitSemverTags from 'git-semver-tags'
 import { Plugin } from 'release-it'
 import semver from 'semver'
-import { shouldSemanticRelease } from 'should-semantic-release'
 import { parse } from 'yaml'
 
 function hasAccess(path) {
@@ -113,9 +112,6 @@ class ReleaseItPnpmPlugin extends Plugin {
       && semver.gt(version, latestTagVersion ?? '0.0.0')
     )
       return semver.valid(version)
-
-    if (!await shouldSemanticRelease({ verbose: true }))
-      return null
 
     const { options } = this
     this.debug('conventionalRecommendedBump', { options })
