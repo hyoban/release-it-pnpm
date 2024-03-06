@@ -108,7 +108,13 @@ class ReleaseItPnpmPlugin extends Plugin {
     this.debug('conventionalRecommendedBump', { options })
 
     if (!options.ci) {
-      const result = await versionBump()
+      const result = await versionBump({
+        commit: false,
+        tag: false,
+        push: false,
+        confirm: true,
+        files: ['this-is-a-non-existing-file-i-believe-you-do-not-have-it.txt'],
+      })
       return semver.valid(result.newVersion)
     }
 
