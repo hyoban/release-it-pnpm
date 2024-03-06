@@ -60,7 +60,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
   async init() {
     const { name, version, private: isPrivate } = readJSON(path.resolve(MANIFEST_PATH))
-    this.setContext({ name, latestVersion: version })
+    this.setContext({ name, version })
 
     const updates = [{ entry: MANIFEST_PATH, name, version, isPrivate: !!isPrivate }]
 
@@ -97,25 +97,22 @@ class ReleaseItPnpmPlugin extends Plugin {
     return this.getIncrementedVersion(options)
   }
 
-  async getIncrementedVersion(options) {
-    const tags = await gitSemverTags()
-    const latestTagVersion = tags[0]
-    const { latestVersion } = this.getContext()
-    if (
-      typeof latestVersion === 'string'
-      && semver.valid(latestVersion)
-      && semver.gt(latestVersion, latestTagVersion ?? '0.0.0')
-    )
-      return semver.valid(latestVersion)
-
-    return this.getRecommendedVersion(options)
+  async getIncrementedVersion() {
+    return null
   }
 
   async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
     this.debug({ increment, latestVersion, isPreRelease, preReleaseId })
+
+    const tags = await gitSemverTags()
+    const latestTagVersion = tags[0]
     const { version } = this.getContext()
-    if (version)
-      return version
+    if (
+      typeof version === 'string'
+      && semver.valid(version)
+      && semver.gt(version, latestTagVersion ?? '0.0.0')
+    )
+      return semver.valid(version)
 
     if (!await shouldSemanticRelease({ verbose: true }))
       return null
