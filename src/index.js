@@ -23,11 +23,11 @@ const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'))
 const prompts = {
   publish: {
     type: 'confirm',
-    message: `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)`,
+    message: () => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)`,
   },
   release: {
     type: 'confirm',
-    message: 'Are you sure you want to create a new release on GitHub?',
+    message: () => 'Are you sure you want to create a new release on GitHub?',
   },
 }
 
