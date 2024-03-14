@@ -69,7 +69,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       const content = fs.readFileSync(path.resolve(MANIFEST_WORKSPACE_PATH), 'utf8')
       const workspaceInfo = parse(content)
 
-      const packages = workspaceInfo.packages
+      const { packages } = workspaceInfo
       if (!packages || !Array.isArray(packages))
         throw new Error('Invalid pnpm-workspace.yaml: packages field is missing or not an array')
 

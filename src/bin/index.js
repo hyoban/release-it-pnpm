@@ -5,7 +5,11 @@ import fs from 'node:fs'
 import releaseYml from './release.txt'
 import releaseConfigJson from './release-it.txt'
 
-// write release.yml to `.github/workflows/release.yml`
+if (!fs.existsSync('.github'))
+  fs.mkdirSync('.github')
+
+if (!fs.existsSync('.github/workflows'))
+  fs.mkdirSync('.github/workflows')
+
 fs.writeFileSync('.github/workflows/release.yml', releaseYml)
-// write .release-it.json to `.release-it.json`
 fs.writeFileSync('.release-it.json', releaseConfigJson)
