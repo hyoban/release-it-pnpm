@@ -28,6 +28,7 @@ ni -D release-it release-it-pnpm
 1. When you not in CI, it will use [bumpp](https://github.com/antfu/bumpp) for next version
 1. Bump all packages to the new version
 1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish))
+   1. prepend `--tag {tag}` if it's a prerelease
 1. Run `npx changelogithub` for github release ([changelogithub](https://github.com/antfu/changelogithub))
 
 ## Generate config
