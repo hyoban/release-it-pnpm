@@ -1,7 +1,7 @@
 {
   "name": "release-it-pnpm",
   "type": "module",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "packageManager": "pnpm@8.15.4",
   "description": "Run release-it with pnpm",
   "author": "Stephen Zhou <hi@hyoban.cc>",
