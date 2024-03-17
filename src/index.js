@@ -125,9 +125,14 @@ class ReleaseItPnpmPlugin extends Plugin {
       })
     }
 
+    this.debug({ newVersion, parsed: semver.parse(newVersion) })
+    const { prerelease } = semver.parse(newVersion)
+    const includePrerelease = prerelease.length > 0
+    const prereleaseTag = includePrerelease ? `--tag ${prerelease[0]}` : ''
+
     await this.step({
       task: async () => {
-        await this.exec(`pnpm -r publish --access public --no-git-checks`)
+        await this.exec(`pnpm -r publish --access public --no-git-checks ${prereleaseTag}`)
       },
       label: 'Publishing packages',
       prompt: 'publish',
