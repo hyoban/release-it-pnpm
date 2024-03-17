@@ -18,13 +18,13 @@ ni -D release-it release-it-pnpm
 
 - [ ] use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly
 - [ ] use [Conventional Commits](https://www.conventionalcommits.org) and follow [Semantic Versioning](https://semver.org)
+- [ ] prefer add a `v` prefix to the tag name (e.g. `v1.2.3`)
 
 ## What it does
 
 1. Disable built-in `npm`, `version`, `github` plugins
 1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog))
    1. support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option
-   1. override version by manual setting version in `package.json`
 1. When you not in CI, it will use [bumpp](https://github.com/antfu/bumpp) for next version
 1. Bump all packages to the new version
 1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish))
