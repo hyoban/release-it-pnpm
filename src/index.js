@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 
-import { versionBump } from 'bumpp'
+import { versionBump } from '@hyoban/bumpp'
 import conventionalRecommendedBump from 'conventional-recommended-bump'
 import { Plugin } from 'release-it'
 import semver from 'semver'

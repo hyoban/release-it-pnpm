@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      bumpp:
-        specifier: ^9.4.0
-        version: 9.4.0
+      '@hyoban/bumpp':
+        specifier: 9.4.0-1
+        version: 9.4.0-1
       conventional-changelog:
         specifier: ^5.1.0
         version: 5.1.0
@@ -411,6 +411,21 @@ packages:
   /@hutson/parse-repository-url@5.0.0:
     resolution: {integrity: sha512-e5+YUKENATs1JgYHMzTr2MW/NDcXGfYFAuOQU8gJgF/kEh4EqKgfGrfLI67bMD4tbhZVlkigz/9YYwWcbOFthg==}
     engines: {node: '>=10.13.0'}
+    dev: false
+
+  /@hyoban/bumpp@9.4.0-1:
+    resolution: {integrity: sha512-y+h2Mwi+TeiwoNu4mLm5ZK0PgIPxrRKjL2AvNGWIP3555h/ijJdBTDHuhE3K0EIJz6LpIOSH3rS6KFe3wmLS4g==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      '@jsdevtools/ez-spawn': 3.0.4
+      c12: 1.9.0
+      cac: 6.7.14
+      escalade: 3.1.2
+      fast-glob: 3.3.2
+      js-yaml: 4.1.0
+      prompts: 2.4.2
+      semver: 7.6.0
     dev: false
 
   /@iarna/toml@2.2.5:
@@ -1936,21 +1951,6 @@ packages:
       semver: 7.6.0
     dev: true
 
-  /bumpp@9.4.0:
-    resolution: {integrity: sha512-T+N+B5mSSvsTt7kgxGXCKQd957IxmEZwMn2nWirspGUY08u/cBNrpQDMXk43fzLegZtKtXS1v9S06vq2zf6lXQ==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      '@jsdevtools/ez-spawn': 3.0.4
-      c12: 1.9.0
-      cac: 6.7.14
-      escalade: 3.1.2
-      fast-glob: 3.3.2
-      js-yaml: 4.1.0
-      prompts: 2.4.2
-      semver: 7.6.0
-    dev: false
-
   /bunchee@4.4.8(typescript@5.4.2):
     resolution: {integrity: sha512-YfGENthKSPF94+vJqnV51yDwTv5r6YZoBISJBe6ZeD167QL+iwgpMk2IaZzLgawJGCcoybOqII5sRchALWHhEw==}
     engines: {node: '>= 18.0.0'}
@@ -2197,6 +2197,7 @@ packages:
   /clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+    requiresBuild: true
     dev: true
 
   /color-convert@1.9.3:
@@ -2549,6 +2550,7 @@ packages:
 
   /defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    requiresBuild: true
     dependencies:
       clone: 1.0.4
     dev: true
