@@ -123,8 +123,15 @@ class ReleaseItPnpmPlugin extends Plugin {
         recursive: true,
         release: newVersion,
       })
-      if (updatedFiles.length > 0)
-        this.setContext({ needPublish: true })
+      if (updatedFiles.length > 0) {
+        for (const file of updatedFiles) {
+          const { private: isPrivate } = JSON.parse(fs.readFileSync(file, 'utf8'))
+          if (!isPrivate) {
+            this.setContext({ needPublish: true })
+            break
+          }
+        }
+      }
     }
 
     this.debug({ newVersion, parsed: semver.parse(newVersion) })
