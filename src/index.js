@@ -65,7 +65,7 @@ class ReleaseItPnpmPlugin extends Plugin {
     const { options } = this
     this.debug('conventionalRecommendedBump', { options })
 
-    if (!options.ci) {
+    if (!options.ci && !this.options['dry-run']) {
       const result = await versionBump({
         commit: false,
         tag: false,
@@ -115,7 +115,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
   async bump(newVersion) {
     if (!this.options['dry-run']) {
-      await versionBump({
+      const { updatedFiles } = await versionBump({
         commit: false,
         tag: false,
         push: false,
@@ -123,6 +123,8 @@ class ReleaseItPnpmPlugin extends Plugin {
         recursive: true,
         release: newVersion,
       })
+      if (updatedFiles.length > 0)
+        this.setContext({ needPublish: true })
     }
 
     this.debug({ newVersion, parsed: semver.parse(newVersion) })
@@ -133,14 +135,16 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async release() {
-    const { prereleaseTag } = this.getContext()
-    await this.step({
-      task: async () => {
-        await this.exec(`pnpm -r publish --access public ${prereleaseTag}`)
-      },
-      label: 'Publishing packages(s) (pnpm -r publish --access public)',
-      prompt: 'publish',
-    })
+    const { prereleaseTag, needPublish } = this.getContext()
+    if (needPublish) {
+      await this.step({
+        task: async () => {
+          await this.exec(`pnpm -r publish --access public ${prereleaseTag}`)
+        },
+        label: 'Publishing packages(s) (pnpm -r publish --access public)',
+        prompt: 'publish',
+      })
+    }
 
     if (this.options?.disableRelease || !process.env.GITHUB_TOKEN)
       return
