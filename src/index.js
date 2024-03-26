@@ -47,7 +47,7 @@ class ReleaseItPnpmPlugin extends Plugin {
     const { options } = this
     this.debug('conventionalRecommendedBump', { options })
 
-    if (!options.ci && !this.options['dry-run']) {
+    if (!options.ci) {
       const result = await versionBump({
         commit: false,
         tag: false,
