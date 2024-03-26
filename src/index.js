@@ -43,9 +43,9 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async getRecommendedVersion({ latestVersion, increment, isPreRelease, preReleaseId }) {
-    this.debug({ increment, latestVersion, isPreRelease, preReleaseId })
+    this.debug('release-it-pnpm:getRecommendedVersion', { increment, latestVersion, isPreRelease, preReleaseId })
     const { options } = this
-    this.debug('conventionalRecommendedBump', { options })
+    this.debug('release-it-pnpm:getRecommendedVersion', { options })
 
     if (!options.ci) {
       const result = await versionBump({
@@ -66,32 +66,29 @@ class ReleaseItPnpmPlugin extends Plugin {
           preMajor: semver.lt(latestVersion, '1.0.0'),
         },
       })
-      this.debug({ result })
+      this.debug('release-it-pnpm:getRecommendedVersion', { result })
       let { releaseType } = result
       if (increment) {
         this.log.warn(`The recommended bump is "${releaseType}", but is overridden with "${increment}".`)
         releaseType = increment
       }
-      if (increment && semver.valid(increment))
+      if (increment && semver.valid(increment)) {
         return increment
-
-      if (isPreRelease) {
+      }
+      else if (isPreRelease) {
         const type
           = releaseType && !semver.prerelease(latestVersion)
             ? `pre${releaseType}`
             : 'prerelease'
-        this.debug({ inc: { latestVersion, type, preReleaseId } })
         return semver.inc(latestVersion, type, preReleaseId)
       }
-      if (releaseType) {
-        this.debug({ inc: { latestVersion, releaseType, preReleaseId } })
-        return semver.inc(latestVersion, releaseType, preReleaseId)
+      else if (!releaseType) {
+        return null
       }
-      this.debug({ inc: null })
-      return null
+      return semver.inc(latestVersion, releaseType, preReleaseId)
     }
     catch (err) {
-      this.debug({ err })
+      this.debug('release-it-pnpm:getRecommendedVersion', { err })
       throw err
     }
   }
@@ -117,7 +114,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
     }
 
-    this.debug({ newVersion, parsed: semver.parse(newVersion) })
+    this.debug('release-it-pnpm:bump', { newVersion, parsed: semver.parse(newVersion) })
     const { prerelease } = semver.parse(newVersion)
     const includePrerelease = prerelease.length > 0
     const prereleaseTag = includePrerelease ? `--tag ${prerelease[0]}` : ''
@@ -126,6 +123,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
   async release() {
     const { prereleaseTag, needPublish } = this.getContext()
+    this.debug('release-it-pnpm:release', { prereleaseTag, needPublish })
     if (needPublish) {
       await this.step({
         task: async () => {
