@@ -14,11 +14,37 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 ni -D release-it release-it-pnpm
 ```
 
+generate recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` files
+
+```sh
+npx release-it-pnpm
+```
+
+## Usage
+
+Manually decide the next version
+
+```sh
+npx release-it
+```
+
+Use recommended version
+
+```sh
+npx release-it --ci
+```
+
+Choose a pre-release tag instead of the default `beta`
+
+```sh
+npx release-it --preRelease=alpha
+```
+
 ## Requirements
 
 - [ ] use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly
 - [ ] use [Conventional Commits](https://www.conventionalcommits.org) and follow [Semantic Versioning](https://semver.org)
-- [ ] prefer add a `v` prefix to the tag name (e.g. `v1.2.3`)
+- [ ] prefer add an `v` prefix to the tag name (e.g. `v1.2.3`)
 
 ## What it does
 
@@ -30,12 +56,6 @@ ni -D release-it release-it-pnpm
 1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish))
    1. appendix `--tag {tag}` if it's a prerelease
 1. Run `npx changelogithub` for github release ([changelogithub](https://github.com/antfu/changelogithub))
-
-## Generate config
-
-```sh
-npx release-it-pnpm
-```
 
 Guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 
