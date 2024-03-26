@@ -46,12 +46,6 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0(@types/node@20.11.30)
 
-  playground:
-    devDependencies:
-      vite:
-        specifier: ^5.2.6
-        version: 5.2.6(@types/node@20.11.30)
-
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
