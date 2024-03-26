@@ -53,6 +53,7 @@ class ReleaseItPnpmPlugin extends Plugin {
         tag: false,
         push: false,
         confirm: true,
+        preid: preReleaseId,
         files: ['this-is-a-non-existing-file-i-believe-you-do-not-have-it.txt'],
       })
       return semver.valid(result.newVersion)
