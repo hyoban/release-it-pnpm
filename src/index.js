@@ -94,6 +94,8 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async bump(newVersion) {
+    let needPublish = false
+
     if (!this.options['dry-run']) {
       const { updatedFiles } = await versionBump({
         commit: false,
@@ -107,7 +109,7 @@ class ReleaseItPnpmPlugin extends Plugin {
         for (const file of updatedFiles) {
           const { private: isPrivate } = JSON.parse(fs.readFileSync(file, 'utf8'))
           if (!isPrivate) {
-            this.setContext({ needPublish: true })
+            needPublish = true
             break
           }
         }
@@ -119,21 +121,20 @@ class ReleaseItPnpmPlugin extends Plugin {
     const includePrerelease = prerelease.length > 0
     const prereleaseTag = includePrerelease ? `--tag ${prerelease[0]}` : ''
     this.setContext({ prereleaseTag })
-  }
 
-  async release() {
-    const { prereleaseTag, needPublish } = this.getContext()
-    this.debug('release-it-pnpm:release', { prereleaseTag, needPublish })
+    this.debug('release-it-pnpm:bump', { prereleaseTag, needPublish })
     if (needPublish) {
       await this.step({
         task: async () => {
-          await this.exec(`pnpm -r publish --access public ${prereleaseTag}`)
+          await this.exec(`pnpm -r publish --access public --no-git-checks ${prereleaseTag}`)
         },
-        label: 'Publishing packages(s) (pnpm -r publish --access public)',
+        label: 'Publishing packages(s) (pnpm -r publish --access public --no-git-checks)',
         prompt: 'publish',
       })
     }
+  }
 
+  async release() {
     if (this.options?.disableRelease || !process.env.GITHUB_TOKEN)
       return
 
