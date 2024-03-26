@@ -1,19 +1,9 @@
 import fs from 'node:fs'
 
-import { versionBump } from '@hyoban/bumpp'
+import { versionBump } from 'bumpp'
 import conventionalRecommendedBump from 'conventional-recommended-bump'
 import { Plugin } from 'release-it'
 import semver from 'semver'
-
-function hasAccess(path) {
-  try {
-    fs.accessSync(path)
-    return true
-  }
-  catch {
-    return false
-  }
-}
 
 const prompts = {
   publish: {
@@ -26,15 +16,7 @@ const prompts = {
   },
 }
 
-const MANIFEST_PATH = './package.json'
-const MANIFEST_LOCK_PATH = './pnpm-lock.yaml'
-
 class ReleaseItPnpmPlugin extends Plugin {
-  static isEnabled() {
-    return hasAccess(MANIFEST_PATH)
-      && hasAccess(MANIFEST_LOCK_PATH)
-  }
-
   static disablePlugin() {
     return ['npm', 'version', 'github']
   }

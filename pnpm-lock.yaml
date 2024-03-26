@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@hyoban/bumpp':
-        specifier: 9.4.0-1
-        version: 9.4.0-1
+      bumpp:
+        specifier: npm:@hyoban/bumpp@9.4.0-1
+        version: /@hyoban/bumpp@9.4.0-1
       conventional-changelog:
         specifier: ^5.1.0
         version: 5.1.0
