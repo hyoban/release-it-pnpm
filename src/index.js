@@ -18,7 +18,7 @@ function hasAccess(path) {
 const prompts = {
   publish: {
     type: 'confirm',
-    message: () => `Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)`,
+    message: () => 'Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)',
   },
   release: {
     type: 'confirm',
