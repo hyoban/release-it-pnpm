@@ -14,7 +14,7 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 ni -D release-it release-it-pnpm
 ```
 
-Generate the recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` files.
+Generate the recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` (guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)) files.
 
 ```sh
 npx release-it-pnpm
@@ -56,8 +56,6 @@ npx release-it --preRelease=alpha
 1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish))
    1. appendix `--tag {tag}` if it's a prerelease
 1. Run `npx changelogithub` for GitHub release ([changelogithub](https://github.com/antfu/changelogithub))
-
-Guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 
 <!-- Badges -->
 
