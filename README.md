@@ -14,30 +14,39 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 ni -D release-it release-it-pnpm
 ```
 
-Generate the recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` (guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)) files.
+You can also install it globally
 
 ```sh
-npx release-it-pnpm
+npm i -g release-it release-it-pnpm
 ```
+
+Generate the recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` files.
+
+```sh
+release-it-pnpm
+```
+
+> [!NOTE]
+> guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 
 ## Usage
 
 Manually decide the next version
 
 ```sh
-npx release-it
+release-it
 ```
 
 Use recommended version
 
 ```sh
-npx release-it --ci
+release-it --ci
 ```
 
 Choose a pre-release tag instead of the default `beta`
 
 ```sh
-npx release-it --preRelease=alpha
+release-it --preRelease=alpha
 ```
 
 ## Requirements
