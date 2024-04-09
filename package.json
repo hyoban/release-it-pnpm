@@ -2,7 +2,7 @@
   "name": "release-it-pnpm",
   "type": "module",
   "version": "4.1.8",
-  "packageManager": "pnpm@8.15.5",
+  "packageManager": "pnpm@8.15.6",
   "description": "Run release-it with pnpm",
   "author": "Stephen Zhou <hi@hyoban.cc>",
   "license": "MIT",
@@ -32,7 +32,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "bin": {
-    "release-it-pnpm": "./dist/bin/index.js"
+    "release-it-pnpm": "dist/bin/index.js"
   },
   "files": [
     "dist",
@@ -72,12 +72,12 @@
     "semver": "^7.6.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.30",
+    "@types/node": "20.11.30",
     "@types/semver": "^7.5.8",
-    "bunchee": "^5.0.1",
-    "eslint": "^8.57.0",
-    "eslint-config-hyoban": "^0.3.0",
-    "typescript": "^5.4.3",
+    "bunchee": "^5.1.2",
+    "eslint": "^9.0.0",
+    "eslint-config-hyoban": "^0.4.2",
+    "typescript": "^5.4.4",
     "vitest": "^1.4.0"
   }
 }
