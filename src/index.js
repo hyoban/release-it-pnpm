@@ -135,16 +135,19 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async release() {
-    if (this.options?.disableRelease || !process.env.GITHUB_TOKEN)
+    if (this.options?.disableRelease)
       return
 
-    await this.step({
-      task: async () => {
-        await this.exec('npx changelogithub')
-      },
-      label: 'Creating release on GitHub (npx changelogithub)',
-      prompt: 'release',
-    })
+    try {
+      await this.step({
+        task: () => this.exec('npx changelogithub'),
+        label: 'Creating release on GitHub (npx changelogithub)',
+        prompt: 'release',
+      })
+    }
+    catch (err) {
+      this.log.warn(`Failed to create release on GitHub: ${err.message}`)
+    }
   }
 }
 
