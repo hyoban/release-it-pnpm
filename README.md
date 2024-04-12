@@ -41,6 +41,7 @@ npm i -g release-it release-it-pnpm
 ```
 
 Generate the recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` files.
+
 Check files content at [.release-it.json](./src/bin/release-it.txt) and [.github/workflows/release.yml](./src/bin/release.txt)
 
 ```sh
