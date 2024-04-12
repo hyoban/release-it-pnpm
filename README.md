@@ -10,11 +10,11 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 
 ## Requirements
 
-<details><summary>Use pnpm and set <a href="https://nodejs.org/api/packages.html#packagemanager"> packageManager</a> in <code>package.json</code> correctly.</summary>So that GitHub Action can set up pnpm correctly. You can manually select the pnpm version in the GitHub Action workflow file.</details>
+<details><summary>Use pnpm and set <a href="https://nodejs.org/api/packages.html#packagemanager"> packageManager</a> in <code>package.json</code> correctly.</summary><br/>So that GitHub Action can set up pnpm correctly. You can manually select the pnpm version in the GitHub Action workflow file.</details>
 
-<details><summary>Use <a href="https://www.conventionalcommits.org"> Conventional Commits</a> and follow <a href="https://semver.org"> Semantic Versioning </a>.</summary>So that it can provide recommended version in CI. It's OK to not follow this rule if you manually decide the next version and disable GitHub release.</details>
+<details><summary>Use <a href="https://www.conventionalcommits.org"> Conventional Commits</a> and follow <a href="https://semver.org"> Semantic Versioning </a>.</summary><br/>So that it can provide recommended version in CI. It's OK to not follow this rule if you manually decide the next version and disable GitHub release.</details>
 
-<details><summary>Prefer to add a <code>v</code> prefix to the tag name (e.g. <code>v1.2.3</code>).</summary>So that it can handle pre-release GitHub release changelog correctly. It's OK to not follow this rule if you do not care about pre-release GitHub release changelog.</details>
+<details><summary>Prefer to add a <code>v</code> prefix to the tag name (e.g. <code>v1.2.3</code>).</summary><br/>So that it can handle pre-release GitHub release changelog correctly. It's OK to not follow this rule if you do not care about pre-release GitHub release changelog.</details>
 
 ## What it does
 
