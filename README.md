@@ -10,21 +10,21 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 
 ## Requirements
 
-- [ ] use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly
-- [ ] use [Conventional Commits](https://www.conventionalcommits.org) and follow [Semantic Versioning](https://semver.org)
-- [ ] prefer to add a `v` prefix to the tag name (e.g. `v1.2.3`)
+- [ ] use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly. (So that GitHub Action can set up pnpm correctly)
+- [ ] use [Conventional Commits](https://www.conventionalcommits.org) and follow [Semantic Versioning](https://semver.org). (So that it can provide recommended version in CI)
+- [ ] prefer to add a `v` prefix to the tag name (e.g. `v1.2.3`). (So that it can handle pre-release GitHub release changelog correctly)
 
 ## What it does
 
-1. Disable built-in `npm`, `version`, `github` plugins
-1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog))
-   1. support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option
-1. When you are not in CI, it will use [bumpp](https://github.com/antfu/bumpp) for the next version
-1. Bump all packages to the new version
-1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish))
-   1. appendix `--tag {tag}` if it's a prerelease
-1. Run `npx changelogithub` for GitHub release ([changelogithub](https://github.com/antfu/changelogithub))
-   1. You can disable it by setting `disableRelease` to `true` in `.release-it.json`
+1. Disable built-in `npm`, `version`, `github` plugins.
+1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog)).
+   1. Support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option.
+1. When you are not in CI, it will use [bumpp](https://github.com/antfu/bumpp) for the next version.
+1. Bump all packages to the new version.
+1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish)).
+   1. Appendix `--tag {tag}` if it's a pre-release.
+1. Run `npx changelogithub` for GitHub release ([changelogithub](https://github.com/antfu/changelogithub)).
+   1. You can disable it by setting `disableRelease` to `true` in `.release-it.json`.
 
 ## Install
 
