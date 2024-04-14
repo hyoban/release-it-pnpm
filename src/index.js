@@ -140,8 +140,8 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     try {
       await this.step({
-        task: () => this.exec('npx changelogithub'),
-        label: 'Creating release on GitHub (npx changelogithub)',
+        task: () => this.exec('npx @hyoban/changelogithub'),
+        label: 'Creating release on GitHub (npx @hyoban/changelogithub)',
         prompt: 'release',
       })
     }

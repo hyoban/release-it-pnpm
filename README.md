@@ -14,8 +14,6 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 
 <details><summary>Use <a href="https://www.conventionalcommits.org"> Conventional Commits</a> and follow <a href="https://semver.org"> Semantic Versioning </a>.</summary><br/>So that it can provide recommended version in CI. It's OK to not follow this rule if you manually decide the next version and disable GitHub release.</details>
 
-<details><summary>Prefer to add a <code>v</code> prefix to the tag name (e.g. <code>v1.2.3</code>).</summary><br/>So that it can handle pre-release GitHub release changelog correctly. It's OK to not follow this rule if you do not care about pre-release GitHub release changelog.</details>
-
 ## What it does
 
 1. Disable built-in `npm`, `version`, `github` plugins.
@@ -25,7 +23,7 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 1. Bump all packages to the new version.
 1. Run `pnpm -r publish --access public --no-git-checks` ([pnpm publish](https://pnpm.io/cli/publish)).
    1. Appendix `--tag {tag}` if it's a pre-release.
-1. Run `npx changelogithub` for GitHub release ([changelogithub](https://github.com/antfu/changelogithub)).
+1. Run `npx @hyoban/changelogithub` for GitHub release ([changelogithub](https://github.com/antfu/changelogithub)).
    1. You can disable it by setting `disableRelease` to `true` in `.release-it.json`.
 
 ## Install
