@@ -25,6 +25,7 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
    1. Appendix `--tag {tag}` if it's a pre-release.
 1. Run `npx @hyoban/changelogithub` for GitHub release ([changelogithub](https://github.com/antfu/changelogithub)).
    1. You can disable it by setting `disableRelease` to `true` in `.release-it.json`.
+   1. It's actually running [my forked version](https://github.com/antfu/changelogithub/compare/main...hyoban-fork:changelogithub:fix/parse-prerelease) of changelogithub, using `semver` to parse the version, without requiring a `v` prefix.
 
 ## Install
 
