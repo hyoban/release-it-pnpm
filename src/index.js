@@ -18,7 +18,7 @@ const prompts = {
 
 class ReleaseItPnpmPlugin extends Plugin {
   static disablePlugin() {
-    return ['npm', 'version', 'github']
+    return ['npm', 'version']
   }
 
   constructor(...args) {

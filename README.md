@@ -16,7 +16,7 @@ Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://p
 
 ## What it does
 
-1. Disable built-in `npm`, `version`, `github` plugins.
+1. Disable built-in `npm`, `version` plugins.
 1. Provide recommended version automatically (code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog)).
    1. Support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option.
 1. When you are not in CI, it will use [bumpp](https://github.com/antfu/bumpp) for the next version.
