@@ -12,7 +12,7 @@ const prompts = {
   },
   release: {
     type: 'confirm',
-    message: () => 'Are you sure you want to create a new release on GitHub? (npx changelogithub)',
+    message: () => 'Are you sure you want to create a new release on GitHub? (npx @hyoban/changelogithub)',
   },
 }
 

@@ -51,7 +51,8 @@
       "./src/index.js": {}
     },
     "git": {
-      "commitMessage": "chore: release ${version}"
+      "commitMessage": "chore: release ${version}",
+      "tagName": "${version}"
     },
     "hooks": {
       "before:init": [
