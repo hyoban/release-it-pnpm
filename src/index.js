@@ -39,6 +39,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 			"dry-run": options["dry-run"],
 			"ci": options.ci,
 			"preRelease": options.preRelease,
+			"verbose": options.verbose,
 		});
 	}
 
@@ -182,17 +183,21 @@ class ReleaseItPnpmPlugin extends Plugin {
 					});
 					webUrl = `https://${config.baseUrl}/${config.repo}/releases/new?title=${encodeURIComponent(String(config.name || config.to))}&body=${encodeURIComponent(String(md))}&tag=${encodeURIComponent(String(config.to))}&prerelease=${config.prerelease}`;
 
-					this.log.log(
-						cyan(config.from) +
-							dim(" -> ") +
-							blue(config.to) +
-							dim(` (${commits.length} commits)`),
-					);
-					this.log.log(dim("--------------"));
-					this.log.log();
-					this.log.log(md.replaceAll("&nbsp;", ""));
-					this.log.log();
-					this.log.log(dim("--------------"));
+					this.debug("release-it-pnpm:release", { config, md, commits });
+
+					if (this.options["verbose"]) {
+						this.log.log(
+							cyan(config.from) +
+								dim(" -> ") +
+								blue(config.to) +
+								dim(` (${commits.length} commits)`),
+						);
+						this.log.log(dim("--------------"));
+						this.log.log();
+						this.log.log(md.replaceAll("&nbsp;", ""));
+						this.log.log();
+						this.log.log(dim("--------------"));
+					}
 
 					const printWebUrl = () => {
 						this.log.log();
