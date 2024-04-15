@@ -1,7 +1,14 @@
 import fs from "node:fs";
 
 import { versionBump } from "bumpp";
+import {
+	generate,
+	hasTagOnGitHub,
+	isRepoShallow,
+	sendRelease,
+} from "changelogithub";
 import conventionalRecommendedBump from "conventional-recommended-bump";
+import { blue, bold, cyan, dim, red, yellow } from "kolorist";
 import { Plugin } from "release-it";
 import semver from "semver";
 
@@ -156,15 +163,108 @@ class ReleaseItPnpmPlugin extends Plugin {
 	async release() {
 		if (this.options?.disableRelease) return;
 
-		try {
-			await this.step({
-				task: () => this.exec("npx changelogithub"),
-				label: "Creating release on GitHub (npx changelogithub)",
-				prompt: "release",
-			});
-		} catch (err) {
-			this.log.warn(`Failed to create release on GitHub: ${err.message}`);
-		}
+		await this.step({
+			task: async () => {
+				let token = process.env.GITHUB_TOKEN;
+				if (!token) {
+					try {
+						token = await this.exec("gh auth token");
+					} catch (e) {
+						this.debug("release-it-pnpm:release", e);
+					}
+				}
+
+				let webUrl = "";
+
+				try {
+					const { config, md, commits } = await generate({
+						token,
+						dry: this.options["dry-run"],
+					});
+					webUrl = `https://${config.baseUrl}/${config.repo}/releases/new?title=${encodeURIComponent(String(config.name || config.to))}&body=${encodeURIComponent(String(md))}&tag=${encodeURIComponent(String(config.to))}&prerelease=${config.prerelease}`;
+
+					this.log.log(
+						cyan(config.from) +
+							dim(" -> ") +
+							blue(config.to) +
+							dim(` (${commits.length} commits)`),
+					);
+					this.log.log(dim("--------------"));
+					this.log.log();
+					this.log.log(md.replaceAll("&nbsp;", ""));
+					this.log.log();
+					this.log.log(dim("--------------"));
+
+					function printWebUrl() {
+						this.log.log();
+						this.log.error(
+							yellow("Using the following link to create it manually:"),
+						);
+						this.log.error(yellow(webUrl));
+						this.log.log();
+					}
+
+					if (config.dry) {
+						this.log.log(yellow("Dry run. Release skipped."));
+						printWebUrl();
+						return;
+					}
+
+					if (!config.token) {
+						this.log.error(
+							red(
+								"No GitHub token found, specify it via GITHUB_TOKEN env. Release skipped.",
+							),
+						);
+						printWebUrl();
+						return;
+					}
+
+					if (!(await hasTagOnGitHub(config.to, config))) {
+						this.log.error(
+							yellow(
+								`Current ref "${bold(config.to)}" is not available as tags on GitHub. Release skipped.`,
+							),
+						);
+						process.exitCode = 1;
+						printWebUrl();
+						return;
+					}
+
+					if (commits.length === 0 && (await isRepoShallow())) {
+						this.log.error(
+							yellow(
+								"The repo seems to be clone shallowly, which make changelog failed to generate. You might want to specify `fetch-depth: 0` in your CI config.",
+							),
+						);
+						process.exitCode = 1;
+						printWebUrl();
+						return;
+					}
+
+					await sendRelease(config, md);
+				} catch (e) {
+					this.log.error(red(String(e)));
+					if (e?.stack)
+						this.log.error(dim(e.stack?.split("\n").slice(1).join("\n")));
+
+					if (webUrl) {
+						this.log.log();
+						this.log.error(
+							red(
+								"Failed to create the release. Using the following link to create it manually:",
+							),
+						);
+						this.log.error(yellow(webUrl));
+						this.log.log();
+					}
+					// eslint-disable-next-line unicorn/no-process-exit
+					process.exit(1);
+				}
+			},
+			label: "Creating release on GitHub (npx changelogithub)",
+			prompt: "release",
+		});
 	}
 }
 

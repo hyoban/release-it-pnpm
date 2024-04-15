@@ -68,8 +68,10 @@
 	},
 	"dependencies": {
 		"bumpp": "npm:@hyoban/bumpp@9.4.0-1",
+		"changelogithub": "^0.13.6",
 		"conventional-changelog": "^5.1.0",
 		"conventional-recommended-bump": "^9.0.0",
+		"kolorist": "^1.8.0",
 		"semver": "^7.6.0"
 	},
 	"devDependencies": {
