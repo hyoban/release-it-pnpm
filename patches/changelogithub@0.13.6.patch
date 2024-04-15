@@ -1,5 +1,5 @@
 diff --git a/dist/index.cjs b/dist/index.cjs
-index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..2e48fab2b266ba079d71931efc92316c00ef9339 100644
+index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..fe0e2098ae9c433dbdf8da1669ec78e01c0198e7 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
 @@ -139,13 +139,13 @@ async function getGitTags() {
@@ -14,13 +14,13 @@ index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..2e48fab2b266ba079d71931efc92316c
    if (!isPrerelease2 && isVersion)
 -    tag = tags.find((tag2) => tag2 !== inputTag && tag2[0] === "v" && !tag2.includes("-"));
 -  tag || (tag = tags.find((tag2) => tag2 !== inputTag));
-+    tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver__default.prerelease(tag2) === null);
++    tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver__default.prerelease(tag2[0] === "v" ? tag2.slice(1) : tag2) === null);
 +  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2)));
    return tag;
  }
  async function isRefGitTag(to) {
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..c3b5ba8a998433ac3d7a0f7c345e276c3441af45 100644
+index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..9ed7dbb0c07100e945b5b7d4677fae5d83aad4f1 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
 @@ -133,13 +133,13 @@ async function getGitTags() {
@@ -35,7 +35,7 @@ index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..c3b5ba8a998433ac3d7a0f7c345e276c
    if (!isPrerelease2 && isVersion)
 -    tag = tags.find((tag2) => tag2 !== inputTag && tag2[0] === "v" && !tag2.includes("-"));
 -  tag || (tag = tags.find((tag2) => tag2 !== inputTag));
-+    tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver.prerelease(tag2) === null);
++    tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver.prerelease(tag2[0] === "v" ? tag2.slice(1) : tag2) === null);
 +  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2)));
    return tag;
  }
