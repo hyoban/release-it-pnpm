@@ -1,42 +1,52 @@
 diff --git a/dist/index.cjs b/dist/index.cjs
-index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..fe0e2098ae9c433dbdf8da1669ec78e01c0198e7 100644
+index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..33ff484c72ddd5d987ac650eb74a97c2ba57ea65 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
-@@ -139,13 +139,13 @@ async function getGitTags() {
+@@ -138,14 +138,18 @@ async function isRepoShallow() {
+ async function getGitTags() {
    return (await execCommand("git", ["--no-pager", "tag", "-l", "--sort=creatordate"]).then((r) => r.split("\n"))).reverse();
  }
++function getTagWithoutPrefix(tag) {
++  return tag.replace(/^v/, '')
++}
  async function getLastMatchingTag(inputTag) {
 -  const isVersion = semver__default.valid(semver__default.coerce(inputTag));
-+  const isVersion = semver__default.valid(inputTag[0] === "v" ? inputTag.slice(1) : inputTag);
++  const inputTagWithoutPrefix = getTagWithoutPrefix(inputTag)
++  const isVersion = semver__default.valid(inputTagWithoutPrefix);
    const isPrerelease2 = semver__default.prerelease(inputTag) !== null;
    const tags = await getGitTags();
    let tag;
    if (!isPrerelease2 && isVersion)
 -    tag = tags.find((tag2) => tag2 !== inputTag && tag2[0] === "v" && !tag2.includes("-"));
 -  tag || (tag = tags.find((tag2) => tag2 !== inputTag));
-+    tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver__default.prerelease(tag2[0] === "v" ? tag2.slice(1) : tag2) === null);
-+  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2)));
++    tag = tags.find((tag2) => getTagWithoutPrefix(tag2) !== inputTagWithoutPrefix && semver__default.valid(getTagWithoutPrefix(tag2)) && semver__default.prerelease(getTagWithoutPrefix(tag2)) === null);
++  tag || (tag = tags.find((tag2) => getTagWithoutPrefix(tag2) !== inputTagWithoutPrefix && semver__default.valid(getTagWithoutPrefix(tag2))));
    return tag;
  }
  async function isRefGitTag(to) {
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..9ed7dbb0c07100e945b5b7d4677fae5d83aad4f1 100644
+index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..369ded9ef08336e737ead8e97e70fb86b07bb695 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -133,13 +133,13 @@ async function getGitTags() {
+@@ -132,14 +132,18 @@ async function isRepoShallow() {
+ async function getGitTags() {
    return (await execCommand("git", ["--no-pager", "tag", "-l", "--sort=creatordate"]).then((r) => r.split("\n"))).reverse();
  }
++function getTagWithoutPrefix(tag) {
++  return tag.replace(/^v/, '')
++}
  async function getLastMatchingTag(inputTag) {
 -  const isVersion = semver.valid(semver.coerce(inputTag));
-+  const isVersion = semver.valid(inputTag[0] === "v" ? inputTag.slice(1) : inputTag);
++  const inputTagWithoutPrefix = getTagWithoutPrefix(inputTag)
++  const isVersion = semver.valid(inputTagWithoutPrefix);
    const isPrerelease2 = semver.prerelease(inputTag) !== null;
    const tags = await getGitTags();
    let tag;
    if (!isPrerelease2 && isVersion)
 -    tag = tags.find((tag2) => tag2 !== inputTag && tag2[0] === "v" && !tag2.includes("-"));
 -  tag || (tag = tags.find((tag2) => tag2 !== inputTag));
-+    tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver.prerelease(tag2[0] === "v" ? tag2.slice(1) : tag2) === null);
-+  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2)));
++    tag = tags.find((tag2) => getTagWithoutPrefix(tag2) !== inputTagWithoutPrefix && semver.valid(getTagWithoutPrefix(tag2)) && semver.prerelease(getTagWithoutPrefix(tag2)) === null);
++  tag || (tag = tags.find((tag2) => getTagWithoutPrefix(tag2) !== inputTagWithoutPrefix && semver.valid(getTagWithoutPrefix(tag2))));
    return tag;
  }
  async function isRefGitTag(to) {
