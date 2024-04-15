@@ -20,8 +20,7 @@ const prompts = {
 	},
 	release: {
 		type: "confirm",
-		message: () =>
-			"Are you sure you want to create a new release on GitHub? (npx changelogithub)",
+		message: () => "Are you sure you want to create a new release on GitHub?",
 	},
 };
 
@@ -262,7 +261,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 					process.exit(1);
 				}
 			},
-			label: "Creating release on GitHub (npx changelogithub)",
+			label: "Creating release on GitHub",
 			prompt: "release",
 		});
 	}
