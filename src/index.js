@@ -195,14 +195,14 @@ class ReleaseItPnpmPlugin extends Plugin {
 					this.log.log();
 					this.log.log(dim("--------------"));
 
-					function printWebUrl() {
+					const printWebUrl = () => {
 						this.log.log();
 						this.log.error(
 							yellow("Using the following link to create it manually:"),
 						);
 						this.log.error(yellow(webUrl));
 						this.log.log();
-					}
+					};
 
 					if (config.dry) {
 						this.log.log(yellow("Dry run. Release skipped."));
