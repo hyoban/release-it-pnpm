@@ -1,3 +1,4 @@
-import hyoban from 'eslint-config-hyoban'
+// @ts-check
+import hyoban from "eslint-config-hyoban";
 
-export default hyoban()
+export default hyoban();
