@@ -86,5 +86,10 @@
 		"typescript": "^5.4.5",
 		"vitest": "^1.5.0"
 	},
-	"prettier": "prettier-config-hyoban"
+	"prettier": "prettier-config-hyoban",
+	"pnpm": {
+		"patchedDependencies": {
+			"changelogithub@0.13.6": "patches/changelogithub@0.13.6.patch"
+		}
+	}
 }
