@@ -12,7 +12,7 @@ const prompts = {
   },
   release: {
     type: 'confirm',
-    message: () => 'Are you sure you want to create a new release on GitHub? (npx @hyoban/changelogithub)',
+    message: () => 'Are you sure you want to create a new release on GitHub? (npx changelogithub)',
   },
 }
 
@@ -140,8 +140,8 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     try {
       await this.step({
-        task: () => this.exec('npx @hyoban/changelogithub'),
-        label: 'Creating release on GitHub (npx @hyoban/changelogithub)',
+        task: () => this.exec('npx changelogithub'),
+        label: 'Creating release on GitHub (npx changelogithub)',
         prompt: 'release',
       })
     }
