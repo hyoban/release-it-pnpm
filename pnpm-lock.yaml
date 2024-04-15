@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   changelogithub@0.13.6:
-    hash: bp55gl5l5mpi3mkh3b7g5vhtg4
+    hash: djxqej4u3lhrva7qq4v4dqpl5a
     path: patches/changelogithub@0.13.6.patch
 
 importers:
@@ -18,7 +18,7 @@ importers:
         version: /@hyoban/bumpp@9.4.0-1
       changelogithub:
         specifier: ^0.13.6
-        version: 0.13.6(patch_hash=bp55gl5l5mpi3mkh3b7g5vhtg4)
+        version: 0.13.6(patch_hash=djxqej4u3lhrva7qq4v4dqpl5a)
       conventional-changelog:
         specifier: ^5.1.0
         version: 5.1.0
@@ -1710,7 +1710,7 @@ packages:
       yaml: 2.4.1
     dev: false
 
-  /changelogithub@0.13.6(patch_hash=bp55gl5l5mpi3mkh3b7g5vhtg4):
+  /changelogithub@0.13.6(patch_hash=djxqej4u3lhrva7qq4v4dqpl5a):
     resolution: {integrity: sha512-cxkPxGSG51gDX0rjSNbsBAPbM4elTjpTcvmQGqTQ4GPoA6H2/iIbhgo4Dr/SzOsthw+sChrfgPnwIYadA2xmlg==}
     engines: {node: '>=12.0.0'}
     hasBin: true

@@ -1,30 +1,42 @@
 diff --git a/dist/index.cjs b/dist/index.cjs
-index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..af680a98143fcb32435650df652c5e954395210b 100644
+index 58583c81c7d53430a0fa0ec4272835d0612a9e0e..2e48fab2b266ba079d71931efc92316c00ef9339 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
-@@ -144,8 +144,8 @@ async function getLastMatchingTag(inputTag) {
+@@ -139,13 +139,13 @@ async function getGitTags() {
+   return (await execCommand("git", ["--no-pager", "tag", "-l", "--sort=creatordate"]).then((r) => r.split("\n"))).reverse();
+ }
+ async function getLastMatchingTag(inputTag) {
+-  const isVersion = semver__default.valid(semver__default.coerce(inputTag));
++  const isVersion = semver__default.valid(inputTag[0] === "v" ? inputTag.slice(1) : inputTag);
+   const isPrerelease2 = semver__default.prerelease(inputTag) !== null;
    const tags = await getGitTags();
    let tag;
    if (!isPrerelease2 && isVersion)
 -    tag = tags.find((tag2) => tag2 !== inputTag && tag2[0] === "v" && !tag2.includes("-"));
 -  tag || (tag = tags.find((tag2) => tag2 !== inputTag));
-+    tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(semver__default.coerce(tag)) && semver__default.prerelease(tag) === null);
-+  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(semver__default.coerce(tag))));
++    tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver__default.prerelease(tag2) === null);
++  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver__default.valid(tag2[0] === "v" ? tag2.slice(1) : tag2)));
    return tag;
  }
  async function isRefGitTag(to) {
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..d7587dbcbdeefb608a82b637f36adfd8feff7b68 100644
+index 2aa6747fdfa40e0980f7cfc9480c99536e7c636b..c3b5ba8a998433ac3d7a0f7c345e276c3441af45 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -138,8 +138,8 @@ async function getLastMatchingTag(inputTag) {
+@@ -133,13 +133,13 @@ async function getGitTags() {
+   return (await execCommand("git", ["--no-pager", "tag", "-l", "--sort=creatordate"]).then((r) => r.split("\n"))).reverse();
+ }
+ async function getLastMatchingTag(inputTag) {
+-  const isVersion = semver.valid(semver.coerce(inputTag));
++  const isVersion = semver.valid(inputTag[0] === "v" ? inputTag.slice(1) : inputTag);
+   const isPrerelease2 = semver.prerelease(inputTag) !== null;
    const tags = await getGitTags();
    let tag;
    if (!isPrerelease2 && isVersion)
 -    tag = tags.find((tag2) => tag2 !== inputTag && tag2[0] === "v" && !tag2.includes("-"));
 -  tag || (tag = tags.find((tag2) => tag2 !== inputTag));
-+    tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(semver.coerce(tag)) && semver.prerelease(tag) === null);
-+  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(semver.coerce(tag))));
++    tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2) && semver.prerelease(tag2) === null);
++  tag || (tag = tags.find((tag2) => tag2 !== inputTag && semver.valid(tag2[0] === "v" ? tag2.slice(1) : tag2)));
    return tag;
  }
  async function isRefGitTag(to) {
