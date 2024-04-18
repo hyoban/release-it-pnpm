@@ -44,6 +44,16 @@ Check files content at [.release-it.json](./src/bin/release-it.txt) and [.github
 release-it-pnpm
 ```
 
+By default, release-it will not add a `v` prefix for the tag name, useless there already is one tag with the `v` prefix. You can explicitly set the `tagName` in `.release-it.json`:
+
+```json
+{
+	"git": {
+		"tagName": "v${version}"
+	}
+}
+```
+
 > [!TIP]
 > guard with [should-semantic-release](https://github.com/JoshuaKGoldberg/should-semantic-release)
 
