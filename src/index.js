@@ -43,11 +43,15 @@ class ReleaseItPnpmPlugin extends Plugin {
 		});
 	}
 
+	getIncrement(options) {
+		return options.increment;
+	}
+
 	getIncrementedVersionCI(options) {
 		return this.getRecommendedVersion(options);
 	}
 
-	async getIncrementedVersion(options) {
+	getIncrementedVersion(options) {
 		return this.getRecommendedVersion(options);
 	}
 
