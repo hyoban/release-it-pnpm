@@ -101,6 +101,7 @@ jobs:
 
       - name: Release
         run: npx release-it --verbose
+        # remove npx if you install release-it globally
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -176,6 +177,12 @@ Use recommended version
 
 ```sh
 release-it --ci
+```
+
+Override the recommended version even in CI
+
+```sh
+release-it --ci --increment=minor
 ```
 
 Choose a pre-release tag instead of the default `beta`
