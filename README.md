@@ -36,12 +36,17 @@ You can also install it globally
 npm i -g release-it release-it-pnpm
 ```
 
-Generate the recommended config, it will create or overwrite `.release-it.json` and `.github/workflows/release.yml` files.
+The Recommended `.release-it.json` configuration
 
-Check files content at [.release-it.json](./src/bin/release-it.txt) and [.github/workflows/release.yml](./src/bin/release.txt)
-
-```sh
-release-it-pnpm
+```json
+{
+	"plugins": {
+		"release-it-pnpm": {}
+	},
+	"git": {
+		"commitMessage": "chore: release ${version}"
+	}
+}
 ```
 
 By default, release-it will not add a `v` prefix for the tag name, useless there already is one tag with the `v` prefix. You can explicitly set the `tagName` in `.release-it.json`:
@@ -52,6 +57,107 @@ By default, release-it will not add a `v` prefix for the tag name, useless there
 		"tagName": "v${version}"
 	}
 }
+```
+
+The Recommended GitHub Action workflow file `.github/workflows/release.yml`:
+
+```yaml
+name: Release
+
+permissions:
+  contents: write
+  id-token: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: |
+            - args: [--frozen-lockfile]
+            # Add the following line if you install release-it globally
+            # - args: [--global, release-it, release-it-pnpm]
+
+      - name: Release
+        run: npx release-it --verbose
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_PROVENANCE: true
+```
+
+If you want to manually decide the next version in CI, try something like this:
+
+```yaml
+name: Release
+
+permissions:
+  contents: write
+  id-token: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      increment:
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: |
+            - args: [--frozen-lockfile]
+
+      - name: Release
+        run: npx release-it ${{ inputs.increment }}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_PROVENANCE: true
 ```
 
 > [!TIP]
