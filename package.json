@@ -49,7 +49,9 @@
   },
   "release-it": {
     "plugins": {
-      "./src/index.js": {}
+      "./src/index.js": {
+        "inFile": "CHANGELOG.md"
+      }
     },
     "git": {
       "commitMessage": "chore: release ${version}",

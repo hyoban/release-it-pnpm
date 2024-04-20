@@ -198,6 +198,18 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
   }
 
+  async beforeRelease() {
+    const { inFile } = this.options;
+    const isDryRun = this.options["dry-run"];
+
+    this.log.exec(`Writing changelog to ${inFile}`, isDryRun);
+
+    if (inFile && !isDryRun) {
+      const { md } = await generate();
+      await this.writeChangelog(md);
+    }
+  }
+
   async release() {
     if (this.options?.disableRelease) return;
 
