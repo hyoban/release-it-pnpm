@@ -165,7 +165,7 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
   }
 
-  async writeChangelog(changelog) {
+  async writeChangelog(changelog, version) {
     const { inFile, header: _header = "# Changelog" } = this.options;
     const header = _header.split(/\r\n|\r|\n/g).join(EOL);
 
@@ -187,10 +187,9 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     fs.writeFileSync(
       inFile,
-      header +
-        (changelog ? EOL + EOL + changelog.trim() : "") +
-        (previousChangelog ? EOL + EOL + previousChangelog.trim() : "") +
-        EOL,
+      `${header + EOL + EOL}## ${version}${EOL}${EOL}${
+        changelog ? EOL + EOL + changelog.trim() : ""
+      }${previousChangelog ? EOL + EOL + previousChangelog.trim() : ""}${EOL}`,
     );
 
     if (!hasInFile) {
@@ -205,8 +204,8 @@ class ReleaseItPnpmPlugin extends Plugin {
     this.log.exec(`Writing changelog to ${inFile}`, isDryRun);
 
     if (inFile && !isDryRun) {
-      const { md } = await generate();
-      await this.writeChangelog(md);
+      const { md, config } = await generate();
+      await this.writeChangelog(md, config.to);
     }
   }
 
