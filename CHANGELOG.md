@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.4.4
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Correct newVersion &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(c7fc4)</samp>](https://github.com/hyoban/release-it-pnpm/commit/c7fc449)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.4.3...main)
+
 ## main
 
 
