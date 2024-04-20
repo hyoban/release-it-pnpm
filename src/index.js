@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { EOL } from "node:os";
 
 import { versionBump } from "bumpp";
 import {
@@ -164,6 +165,39 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
   }
 
+  async writeChangelog(changelog) {
+    const { inFile, header: _header = "# Changelog" } = this.options;
+    const header = _header.split(/\r\n|\r|\n/g).join(EOL);
+
+    let hasInFile = false;
+    try {
+      fs.accessSync(inFile);
+      hasInFile = true;
+    } catch (err) {
+      this.debug(err);
+    }
+
+    let previousChangelog = "";
+    try {
+      previousChangelog = await fs.promises.readFile(inFile, "utf8");
+      previousChangelog = previousChangelog.replace(header, "");
+    } catch (err) {
+      this.debug(err);
+    }
+
+    fs.writeFileSync(
+      inFile,
+      header +
+        (changelog ? EOL + EOL + changelog.trim() : "") +
+        (previousChangelog ? EOL + EOL + previousChangelog.trim() : "") +
+        EOL,
+    );
+
+    if (!hasInFile) {
+      await this.exec(`git add ${inFile}`);
+    }
+  }
+
   async release() {
     if (this.options?.disableRelease) return;
 
@@ -216,6 +250,11 @@ class ReleaseItPnpmPlugin extends Plugin {
             this.log.log(yellow("Dry run. Release skipped."));
             printWebUrl();
             return;
+          }
+
+          const { inFile } = this.options;
+          if (inFile) {
+            await this.writeChangelog(md);
           }
 
           if (!config.token) {
