@@ -117,6 +117,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async bump(newVersion) {
+    this.setContext({ newVersion });
     let needPublish = false;
 
     if (!this.options["dry-run"]) {
@@ -187,7 +188,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     fs.writeFileSync(
       inFile,
-      `${header + EOL + EOL}## ${version}${EOL}${EOL}${
+      `${header + EOL + EOL}## ${version}${
         changelog ? EOL + EOL + changelog.trim() : ""
       }${previousChangelog ? EOL + EOL + previousChangelog.trim() : ""}${EOL}`,
     );
@@ -198,14 +199,15 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async beforeRelease() {
+    const { newVersion } = this.getContext();
     const { inFile } = this.options;
     const isDryRun = this.options["dry-run"];
 
     this.log.exec(`Writing changelog to ${inFile}`, isDryRun);
 
     if (inFile && !isDryRun) {
-      const { md, config } = await generate();
-      await this.writeChangelog(md, config.to);
+      const { md } = await generate();
+      await this.writeChangelog(md, newVersion);
     }
   }
 
