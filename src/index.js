@@ -264,11 +264,6 @@ class ReleaseItPnpmPlugin extends Plugin {
             return;
           }
 
-          const { inFile } = this.options;
-          if (inFile) {
-            await this.writeChangelog(md);
-          }
-
           if (!config.token) {
             this.log.error(
               red(
