@@ -1,5 +1,15 @@
 # Changelog
 
+## main
+
+
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Show version in changelog &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(2d37b)</samp>](https://github.com/hyoban/release-it-pnpm/commit/2d37bce)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.4.2...main)
+
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
 
 - Do not write changelog in release &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(14ac1)</samp>](https://github.com/hyoban/release-it-pnpm/commit/14ac1a8)
