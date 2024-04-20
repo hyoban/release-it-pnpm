@@ -41,12 +41,12 @@ The Recommended `.release-it.json` configuration
 
 ```json
 {
-	"plugins": {
-		"release-it-pnpm": {}
-	},
-	"git": {
-		"commitMessage": "chore: release ${version}"
-	}
+  "plugins": {
+    "release-it-pnpm": {}
+  },
+  "git": {
+    "commitMessage": "chore: release ${version}"
+  }
 }
 ```
 
@@ -54,9 +54,9 @@ By default, release-it will not add a `v` prefix for the tag name, useless there
 
 ```json
 {
-	"git": {
-		"tagName": "v${version}"
-	}
+  "git": {
+    "tagName": "v${version}"
+  }
 }
 ```
 

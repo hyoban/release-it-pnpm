@@ -1,90 +1,90 @@
 {
-	"name": "release-it-pnpm",
-	"type": "module",
-	"version": "4.3.7",
-	"packageManager": "pnpm@9.0.0+sha256.bdfc9a7b372b5c462176993e586492603e20da5864d2f8881edc2462482c76fa",
-	"description": "Run release-it with pnpm",
-	"author": "Stephen Zhou <hi@hyoban.cc>",
-	"license": "MIT",
-	"homepage": "https://github.com/hyoban/release-it-pnpm#readme",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/hyoban/release-it-pnpm.git"
-	},
-	"bugs": "https://github.com/hyoban/release-it-pnpm/issues",
-	"keywords": [
-		"release",
-		"release-it",
-		"release-it-plugin"
-	],
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"import": {
-				"default": "./dist/index.js"
-			},
-			"require": {
-				"default": "./dist/index.cjs"
-			}
-		},
-		"./package.json": "./package.json"
-	},
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
-	"bin": {
-		"release-it-pnpm": "dist/bin/index.js"
-	},
-	"files": [
-		"dist",
-		"package.json"
-	],
-	"scripts": {
-		"build": "bunchee",
-		"dev": "bunchee -w",
-		"lint": "prettier --list-different . && eslint",
-		"lint:fix": "prettier --list-different --write . && eslint --fix",
-		"prepublishOnly": "pnpm run build",
-		"test": "vitest",
-		"typecheck": "tsc"
-	},
-	"release-it": {
-		"plugins": {
-			"./src/index.js": {}
-		},
-		"git": {
-			"commitMessage": "chore: release ${version}",
-			"tagName": "${version}"
-		},
-		"hooks": {
-			"before:init": [
-				"pnpm run lint",
-				"pnpm run typecheck",
-				"pnpm run test --run"
-			]
-		}
-	},
-	"peerDependencies": {
-		"release-it": "^17.0.0"
-	},
-	"dependencies": {
-		"bumpp": "npm:@hyoban/bumpp@9.4.0-1",
-		"changelogithub": "^0.13.7",
-		"conventional-changelog": "^5.1.0",
-		"conventional-recommended-bump": "^9.0.0",
-		"kolorist": "^1.8.0",
-		"semver": "^7.6.0"
-	},
-	"devDependencies": {
-		"@types/node": "20.11.30",
-		"@types/semver": "^7.5.8",
-		"bunchee": "^5.1.2",
-		"eslint": "^9.0.0",
-		"eslint-config-hyoban": "^1.0.1",
-		"prettier": "^3.2.5",
-		"prettier-config-hyoban": "^1.0.3",
-		"release-it": "^17.2.0",
-		"typescript": "^5.4.5",
-		"vitest": "^1.5.0"
-	},
-	"prettier": "prettier-config-hyoban"
+  "name": "release-it-pnpm",
+  "type": "module",
+  "version": "4.3.7",
+  "packageManager": "pnpm@9.0.4",
+  "description": "Run release-it with pnpm",
+  "author": "Stephen Zhou <hi@hyoban.cc>",
+  "license": "MIT",
+  "homepage": "https://github.com/hyoban/release-it-pnpm#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyoban/release-it-pnpm.git"
+  },
+  "bugs": "https://github.com/hyoban/release-it-pnpm/issues",
+  "keywords": [
+    "release",
+    "release-it",
+    "release-it-plugin"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "bin": {
+    "release-it-pnpm": "dist/bin/index.js"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "bunchee",
+    "dev": "bunchee -w",
+    "lint": "prettier --list-different . && eslint",
+    "lint:fix": "prettier --list-different --write . && eslint --fix",
+    "prepublishOnly": "pnpm run build",
+    "test": "vitest",
+    "typecheck": "tsc"
+  },
+  "release-it": {
+    "plugins": {
+      "./src/index.js": {}
+    },
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "${version}"
+    },
+    "hooks": {
+      "before:init": [
+        "pnpm run lint",
+        "pnpm run typecheck",
+        "pnpm run test --run"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "release-it": "^17.0.0"
+  },
+  "dependencies": {
+    "bumpp": "npm:@hyoban/bumpp@9.4.0-1",
+    "changelogithub": "^0.13.7",
+    "conventional-changelog": "^5.1.0",
+    "conventional-recommended-bump": "^9.0.0",
+    "kolorist": "^1.8.0",
+    "semver": "^7.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "@types/semver": "^7.5.8",
+    "bunchee": "^5.1.2",
+    "eslint": "^9.1.0",
+    "eslint-config-hyoban": "^1.0.3",
+    "prettier": "^3.2.5",
+    "prettier-config-hyoban": "^2.0.2",
+    "release-it": "^17.2.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
+  },
+  "prettier": "prettier-config-hyoban"
 }
