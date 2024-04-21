@@ -16,8 +16,7 @@ import semver from 'semver'
 const prompts = {
   publish: {
     type: 'confirm',
-    message: () =>
-      'Are you sure you want to publish? (pnpm -r publish --access public --no-git-checks)',
+    message: () => 'Are you sure you want to publish package?',
   },
   release: {
     type: 'confirm',
@@ -36,12 +35,16 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   getInitialOptions(options, pluginName) {
-    return Object.assign({}, options[pluginName], {
-      'dry-run': options['dry-run'],
-      'ci': options.ci,
-      'preRelease': options.preRelease,
-      'verbose': options.verbose,
-    })
+    return Object.assign(
+      {},
+      options[pluginName],
+      {
+        'dry-run': options['dry-run'],
+        'ci': options.ci,
+        'preRelease': options.preRelease,
+        'verbose': options.verbose,
+      },
+    )
   }
 
   getIncrement(options) {
@@ -62,14 +65,20 @@ class ReleaseItPnpmPlugin extends Plugin {
     isPreRelease,
     preReleaseId,
   }) {
-    this.debug('release-it-pnpm:getRecommendedVersion', {
-      increment,
-      latestVersion,
-      isPreRelease,
-      preReleaseId,
-    })
+    this.debug(
+      'release-it-pnpm:getRecommendedVersion',
+      {
+        increment,
+        latestVersion,
+        isPreRelease,
+        preReleaseId,
+      },
+    )
     const { options } = this
-    this.debug('release-it-pnpm:getRecommendedVersion', { options })
+    this.debug(
+      'release-it-pnpm:getRecommendedVersion',
+      { options },
+    )
 
     if (!options.ci) {
       const result = await versionBump({
@@ -90,22 +99,22 @@ class ReleaseItPnpmPlugin extends Plugin {
           preMajor: semver.lt(latestVersion, '1.0.0'),
         },
       })
-      this.debug('release-it-pnpm:getRecommendedVersion', { result })
+      this.debug(
+        'release-it-pnpm:getRecommendedVersion',
+        { result },
+      )
       let { releaseType } = result
       if (increment) {
-        this.log.warn(
-          `The recommended bump is "${releaseType}", but is overridden with "${increment}".`,
-        )
+        this.log.warn(`The recommended bump is "${releaseType}", but is overridden with "${increment}".`)
         releaseType = increment
       }
       if (increment && semver.valid(increment)) {
         return increment
       }
       else if (isPreRelease) {
-        const type
-          = releaseType && !semver.prerelease(latestVersion)
-            ? `pre${releaseType}`
-            : 'prerelease'
+        const type = releaseType && !semver.prerelease(latestVersion)
+          ? `pre${releaseType}`
+          : 'prerelease'
         return semver.inc(latestVersion, type, preReleaseId)
       }
       else if (!releaseType) {
@@ -114,7 +123,10 @@ class ReleaseItPnpmPlugin extends Plugin {
       return semver.inc(latestVersion, releaseType, preReleaseId)
     }
     catch (err) {
-      this.debug('release-it-pnpm:getRecommendedVersion', { err })
+      this.debug(
+        'release-it-pnpm:getRecommendedVersion',
+        { err },
+      )
       throw err
     }
   }
@@ -134,9 +146,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       })
       if (updatedFiles.length > 0) {
         for (const file of updatedFiles) {
-          const { private: isPrivate } = JSON.parse(
-            fs.readFileSync(file, 'utf8'),
-          )
+          const { private: isPrivate } = JSON.parse(fs.readFileSync(file, 'utf8'))
           if (!isPrivate) {
             needPublish = true
             break
@@ -145,25 +155,28 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
     }
 
-    this.debug('release-it-pnpm:bump', {
-      newVersion,
-      parsed: semver.parse(newVersion),
-    })
+    this.debug(
+      'release-it-pnpm:bump',
+      {
+        newVersion,
+        parsed: semver.parse(newVersion),
+      },
+    )
+
     const { prerelease } = semver.parse(newVersion)
     const includePrerelease = prerelease.length > 0
     const prereleaseTag = includePrerelease ? `--tag ${prerelease[0]}` : ''
     this.setContext({ prereleaseTag })
 
-    this.debug('release-it-pnpm:bump', { prereleaseTag, needPublish })
+    this.debug(
+      'release-it-pnpm:bump',
+      { prereleaseTag, needPublish },
+    )
+
     if (needPublish) {
       await this.step({
-        task: async () => {
-          await this.exec(
-            `pnpm -r publish --access public --no-git-checks ${prereleaseTag}`,
-          )
-        },
-        label:
-          'Publishing packages(s) (pnpm -r publish --access public --no-git-checks)',
+        task: () => this.exec(`pnpm -r publish --access public --no-git-checks ${prereleaseTag}`),
+        label: 'Publishing packages(s)',
         prompt: 'publish',
       })
     }
@@ -193,9 +206,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     fs.writeFileSync(
       inFile,
-      `${header + EOL + EOL}## ${version}${
-        changelog ? EOL + EOL + changelog.trim() : ''
-      }${previousChangelog ? EOL + EOL + previousChangelog.trim() : ''}${EOL}`,
+      `${header + EOL + EOL}## ${version}${changelog ? EOL + EOL + changelog.trim() : ''}${previousChangelog ? EOL + EOL + previousChangelog.trim() : ''}${EOL}`,
     )
 
     if (!hasInFile)
@@ -258,9 +269,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
           const printWebUrl = () => {
             this.log.log()
-            this.log.error(
-              yellow('Using the following link to create it manually:'),
-            )
+            this.log.error(yellow('Using the following link to create it manually:'))
             this.log.error(yellow(webUrl))
             this.log.log()
           }
@@ -272,32 +281,20 @@ class ReleaseItPnpmPlugin extends Plugin {
           }
 
           if (!config.token) {
-            this.log.error(
-              red(
-                'No GitHub token found, specify it via GITHUB_TOKEN env. Release skipped.',
-              ),
-            )
+            this.log.error(red('No GitHub token found, specify it via GITHUB_TOKEN env. Release skipped.'))
             printWebUrl()
             return
           }
 
           if (!(await hasTagOnGitHub(config.to, config))) {
-            this.log.error(
-              yellow(
-                `Current ref "${bold(config.to)}" is not available as tags on GitHub. Release skipped.`,
-              ),
-            )
+            this.log.error(yellow(`Current ref "${bold(config.to)}" is not available as tags on GitHub. Release skipped.`))
             process.exitCode = 1
             printWebUrl()
             return
           }
 
           if (commits.length === 0 && (await isRepoShallow())) {
-            this.log.error(
-              yellow(
-                'The repo seems to be clone shallowly, which make changelog failed to generate. You might want to specify `fetch-depth: 0` in your CI config.',
-              ),
-            )
+            this.log.error(yellow('The repo seems to be clone shallowly, which make changelog failed to generate. You might want to specify `fetch-depth: 0` in your CI config.'))
             process.exitCode = 1
             printWebUrl()
             return
@@ -312,11 +309,7 @@ class ReleaseItPnpmPlugin extends Plugin {
 
           if (webUrl) {
             this.log.log()
-            this.log.error(
-              red(
-                'Failed to create the release. Using the following link to create it manually:',
-              ),
-            )
+            this.log.error(red('Failed to create the release. Using the following link to create it manually:'))
             this.log.error(yellow(webUrl))
             this.log.log()
           }
