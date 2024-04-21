@@ -5,6 +5,8 @@
 
 Run [release-it](https://github.com/release-it/release-it) with [pnpm](https://pnpm.io).
 
+See [documentation](https://release-it-pnpm.vercel.app) for more information.
+
 <!-- Badges -->
 
 [npm-version-src]: https://img.shields.io/npm/v/release-it-pnpm?style=flat&colorA=080f12&colorB=1fa669
