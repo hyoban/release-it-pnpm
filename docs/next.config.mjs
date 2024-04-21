@@ -1,12 +1,8 @@
-import nextra from "nextra";
-import remarkGithubAlerts from "remark-github-alerts";
+import nextra from 'nextra'
 
 const withNextra = nextra({
-  theme: "nextra-theme-docs",
-  themeConfig: "./theme.config.jsx",
-  mdxOptions: {
-    remarkPlugins: [remarkGithubAlerts],
-  },
-});
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.jsx',
+})
 
-export default withNextra();
+export default withNextra()
