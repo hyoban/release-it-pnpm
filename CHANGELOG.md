@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.5.0
+
+### &nbsp;&nbsp;&nbsp;Features
+
+- Support custom publish command &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(d87f5)</samp>](https://github.com/hyoban/release-it-pnpm/commit/d87f5ae)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.4.4...main)
+
 ## 4.4.4
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
