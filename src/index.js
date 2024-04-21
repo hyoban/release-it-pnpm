@@ -24,6 +24,8 @@ const prompts = {
   },
 }
 
+const defaultPublishCommand = 'pnpm -r publish --access public --no-git-checks --tag $tag'
+
 class ReleaseItPnpmPlugin extends Plugin {
   static disablePlugin() {
     return ['npm', 'version']
@@ -133,6 +135,8 @@ class ReleaseItPnpmPlugin extends Plugin {
 
   async bump(newVersion) {
     this.setContext({ newVersion })
+
+    const { publishCommand = defaultPublishCommand } = this.options
     let needPublish = false
 
     if (!this.options['dry-run']) {
@@ -144,38 +148,43 @@ class ReleaseItPnpmPlugin extends Plugin {
         recursive: true,
         release: newVersion,
       })
-      if (updatedFiles.length > 0) {
-        for (const file of updatedFiles) {
-          const { private: isPrivate } = JSON.parse(fs.readFileSync(file, 'utf8'))
-          if (!isPrivate) {
-            needPublish = true
-            break
-          }
+      if (updatedFiles.length === 0)
+        return
+
+      // Only publish when some packages is not private
+      for (const file of updatedFiles) {
+        const { private: isPrivate } = JSON.parse(fs.readFileSync(file, 'utf8'))
+        if (!isPrivate) {
+          needPublish = true
+          break
         }
       }
+
+      // Using custom publish command
+      if (!publishCommand?.startsWith('pnpm'))
+        needPublish = true
     }
+
+    const { prerelease } = semver.parse(newVersion)
+    const includePrerelease = prerelease.length > 0
+    const tag = prerelease[0] ?? 'latest'
 
     this.debug(
       'release-it-pnpm:bump',
       {
+        needPublish,
+        publishCommand,
+        includePrerelease,
+        prerelease,
+        tag,
         newVersion,
-        parsed: semver.parse(newVersion),
+        parsedNewVersion: semver.parse(newVersion),
       },
-    )
-
-    const { prerelease } = semver.parse(newVersion)
-    const includePrerelease = prerelease.length > 0
-    const prereleaseTag = includePrerelease ? `--tag ${prerelease[0]}` : ''
-    this.setContext({ prereleaseTag })
-
-    this.debug(
-      'release-it-pnpm:bump',
-      { prereleaseTag, needPublish },
     )
 
     if (needPublish) {
       await this.step({
-        task: () => this.exec(`pnpm -r publish --access public --no-git-checks ${prereleaseTag}`),
+        task: () => this.exec(publishCommand.replace('$tag', tag)),
         label: 'Publishing packages(s)',
         prompt: 'publish',
       })

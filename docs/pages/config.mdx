@@ -7,11 +7,12 @@ import { Callout } from "nextra/components";
   changelog file.
 </Callout>
 
-|       Key        |   Type    |     Default     |            Description             |
-| :--------------: | :-------: | :-------------: | :--------------------------------: |
-| `disableRelease` | `boolean` |   `undefined`   | Do not create a release on GitHub. |
-|     `inFile`     | `string`  |   `undefined`   |    Path to the changelog file.     |
-|     `header`     | `string`  | `"# Changelog"` |   Header of the changelog file.    |
+|       Key        |   Type    |                           Default                            |            Description             |
+| :--------------: | :-------: | :----------------------------------------------------------: | :--------------------------------: |
+| `disableRelease` | `boolean` |                         `undefined`                          | Do not create a release on GitHub. |
+|     `inFile`     | `string`  |                         `undefined`                          |    Path to the changelog file.     |
+|     `header`     | `string`  |                       `"# Changelog"`                        |   Header of the changelog file.    |
+| `publishCommand` | `string`  | `pnpm -r publish --access public --no-git-checks --tag $tag` |  Command to publish the package.   |
 
 Example:
 
@@ -20,7 +21,8 @@ Example:
   "plugins": {
     "release-it-pnpm": {
       "disableRelease": true,
-      "inFile": "CHANGELOG.md"
+      "inFile": "CHANGELOG.md",
+      "publishCommand": "vsce publish --no-dependencies"
     }
   }
 }
