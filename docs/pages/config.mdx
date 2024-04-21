@@ -12,3 +12,16 @@ import { Callout } from "nextra/components";
 | `disableRelease` | `boolean` |   `undefined`   | Do not create a release on GitHub. |
 |     `inFile`     | `string`  |   `undefined`   |    Path to the changelog file.     |
 |     `header`     | `string`  | `"# Changelog"` |   Header of the changelog file.    |
+
+Example:
+
+```json
+{
+  "plugins": {
+    "release-it-pnpm": {
+      "disableRelease": true,
+      "inFile": "CHANGELOG.md"
+    }
+  }
+}
+```
