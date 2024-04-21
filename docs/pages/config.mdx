@@ -1,0 +1,14 @@
+# Configuration
+
+import { Callout } from "nextra/components";
+
+<Callout>
+  By default, the plugin will create a release on GitHub and doesn't create a
+  changelog file.
+</Callout>
+
+|       Key        |   Type    |     Default     |            Description             |
+| :--------------: | :-------: | :-------------: | :--------------------------------: |
+| `disableRelease` | `boolean` |   `undefined`   | Do not create a release on GitHub. |
+|     `inFile`     | `string`  |   `undefined`   |    Path to the changelog file.     |
+|     `header`     | `string`  | `"# Changelog"` |   Header of the changelog file.    |

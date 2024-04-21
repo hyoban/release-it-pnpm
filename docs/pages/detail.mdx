@@ -1,0 +1,41 @@
+# Detail
+
+import { Steps } from "nextra/components";
+
+## Requirements with workaround
+
+### Use pnpm and set [packageManager](https://nodejs.org/api/packages.html#packagemanager) in `package.json` correctly
+
+So that GitHub Action can set up pnpm correctly. You can also manually setup the pnpm version in the GitHub Action workflow file.
+
+### Use [Conventional Commits](https://www.conventionalcommits.org) and follow [Semantic Versioning](https://semver.org)
+
+So that it can provide recommended version in CI. It's OK to not follow this rule if you manually decide the next version and disable GitHub release.
+
+## What it does
+
+<Steps>
+
+### Disable built-in `npm`, `version` plugins
+
+### Provide recommended version in CI
+
+1.  code and idea from [conventional-changelog](https://github.com/release-it/conventional-changelog)
+1.  Support [preMajor](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md#premajor-boolean) option.
+
+### Use [bumpp](https://github.com/antfu/bumpp) for the next version locally
+
+### Bump all packages to the new version
+
+### Run `pnpm -r publish --access public --no-git-checks`
+
+1. [pnpm publish](https://pnpm.io/cli/publish)
+1. Appendix `--tag {tag}` if it's a pre-release.
+
+### Generate changelog locally if needed
+
+### Run [changelogithub](https://github.com/antfu/changelogithub) for GitHub release if needed
+
+1. It will read GitHub token from `GITHUB_TOKEN` environment variable or `gh auth token` output.
+
+</Steps>

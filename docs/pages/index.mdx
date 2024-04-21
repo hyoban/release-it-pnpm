@@ -1,0 +1,74 @@
+# Getting Started
+
+import { Steps } from "nextra/components";
+
+## Prepare
+
+<Steps>
+
+### Install dependencies
+
+```sh copy npm2yarn
+npm install --save-dev release-it release-it-pnpm
+```
+
+You can also install it globally
+
+```sh copy npm2yarn
+npm install --global release-it release-it-pnpm
+```
+
+### Create configuration file
+
+```json copy filename=".release-it.json"
+{
+  "plugins": {
+    "release-it-pnpm": {}
+  },
+  "git": {
+    "commitMessage": "chore: release ${version}"
+  }
+}
+```
+
+If you prefer to have a `v` prefix in the tag name, you can use the following configuration:
+
+```json copy filename=".release-it.json"
+{
+  "plugins": {
+    "release-it-pnpm": {}
+  },
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}"
+  }
+}
+```
+
+</Steps>
+
+## Cli Usage
+
+Manually decide the next version
+
+```sh
+release-it
+```
+
+Use recommended version
+
+```sh
+release-it --ci
+```
+
+Override the recommended version in CI
+
+```sh
+release-it --ci --increment=minor
+```
+
+Choose a pre-release tag instead of the default `beta`
+
+```sh
+release-it --preRelease=alpha
+```
