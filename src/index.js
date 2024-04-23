@@ -161,7 +161,7 @@ class ReleaseItPnpmPlugin extends Plugin {
       }
 
       // Using custom publish command
-      if (!publishCommand?.startsWith('pnpm'))
+      if (publishCommand !== defaultPublishCommand)
         needPublish = true
     }
 
