@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.6.0
+
+### &nbsp;&nbsp;&nbsp;Features
+
+- Update conventional-changelog and conventional-recommended-bump &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(5546e)</samp>](https://github.com/hyoban/release-it-pnpm/commit/5546eb8)
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Missing emoji in title &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(e3cba)</samp>](https://github.com/hyoban/release-it-pnpm/commit/e3cbaf3)
+- Apply breaking change from conventional-recommended-bump &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(1b3e8)</samp>](https://github.com/hyoban/release-it-pnpm/commit/1b3e8fa)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.5.1...main)
+
 ## 4.5.1
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
