@@ -256,6 +256,7 @@ class ReleaseItPnpmPlugin extends Plugin {
         try {
           const { config, md, commits } = await generate({
             token,
+            emoji: true,
             dry: this.options['dry-run'],
           })
           webUrl = `https://${config.baseUrl}/${config.repo}/releases/new?title=${encodeURIComponent(String(config.name || config.to))}&body=${encodeURIComponent(String(md))}&tag=${encodeURIComponent(String(config.to))}&prerelease=${config.prerelease}`
