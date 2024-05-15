@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.1
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Only use conventional-changelog-conventionalcommits &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(93e15)</samp>](https://github.com/hyoban/release-it-pnpm/commit/93e15b3)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.6.0...main)
+
 ## 4.6.0
 
 ### &nbsp;&nbsp;&nbsp;Features
