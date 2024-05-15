@@ -8,7 +8,7 @@ import {
   isRepoShallow,
   sendRelease,
 } from 'changelogithub'
-import conventionalRecommendedBump from 'conventional-recommended-bump'
+import { Bumper } from 'conventional-recommended-bump'
 import { blue, bold, cyan, dim, red, yellow } from 'kolorist'
 import { Plugin } from 'release-it'
 import semver from 'semver'
@@ -95,12 +95,13 @@ class ReleaseItPnpmPlugin extends Plugin {
     }
 
     try {
-      const result = await conventionalRecommendedBump({
-        preset: {
+      const bumper = new Bumper(process.cwd()).loadPreset(
+        {
           name: 'conventionalcommits',
           preMajor: semver.lt(latestVersion, '1.0.0'),
         },
-      })
+      )
+      const result = await bumper.bump()
       this.debug(
         'release-it-pnpm:getRecommendedVersion',
         { result },
