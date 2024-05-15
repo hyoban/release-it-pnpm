@@ -71,7 +71,7 @@
   "dependencies": {
     "bumpp": "^9.4.1",
     "changelogithub": "^0.13.7",
-    "conventional-changelog": "^6.0.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
     "conventional-recommended-bump": "^10.0.0",
     "kolorist": "^1.8.0",
     "semver": "^7.6.2"

@@ -2,12 +2,7 @@ import fs from 'node:fs'
 import { EOL } from 'node:os'
 
 import { versionBump } from 'bumpp'
-import {
-  generate,
-  hasTagOnGitHub,
-  isRepoShallow,
-  sendRelease,
-} from 'changelogithub'
+import { generate, hasTagOnGitHub, isRepoShallow, sendRelease } from 'changelogithub'
 import { Bumper } from 'conventional-recommended-bump'
 import { blue, bold, cyan, dim, red, yellow } from 'kolorist'
 import { Plugin } from 'release-it'
