@@ -133,6 +133,9 @@ class ReleaseItPnpmPlugin extends Plugin {
     this.setContext({ newVersion })
 
     const { publishCommand = defaultPublishCommand } = this.options
+    const { inFile } = this.options
+    const isDryRun = this.options['dry-run']
+
     let needPublish = false
 
     if (!this.options['dry-run']) {
@@ -178,6 +181,12 @@ class ReleaseItPnpmPlugin extends Plugin {
       },
     )
 
+    this.log.exec(`Writing changelog to ${inFile}`, isDryRun)
+    if (inFile && !isDryRun) {
+      const { md } = await generate()
+      await this.writeChangelog(md, newVersion)
+    }
+
     if (needPublish) {
       await this.step({
         task: () => this.exec(publishCommand.replace('$tag', tag)),
@@ -216,19 +225,6 @@ class ReleaseItPnpmPlugin extends Plugin {
 
     if (!hasInFile)
       await this.exec(`git add ${inFile}`)
-  }
-
-  async beforeRelease() {
-    const { newVersion } = this.getContext()
-    const { inFile } = this.options
-    const isDryRun = this.options['dry-run']
-
-    this.log.exec(`Writing changelog to ${inFile}`, isDryRun)
-
-    if (inFile && !isDryRun) {
-      const { md } = await generate()
-      await this.writeChangelog(md, newVersion)
-    }
   }
 
   async release() {
