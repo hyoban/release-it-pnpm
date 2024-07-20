@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.3
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Link in changelog file &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(2a00f)</samp>](https://github.com/hyoban/release-it-pnpm/commit/2a00ffc)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.6.2...4.6.3)
+
 ## 4.6.2
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
