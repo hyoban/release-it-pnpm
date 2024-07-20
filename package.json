@@ -2,7 +2,7 @@
   "name": "release-it-pnpm",
   "type": "module",
   "version": "4.6.2",
-  "packageManager": "pnpm@9.1.1",
+  "packageManager": "pnpm@9.5.0",
   "description": "Run release-it with pnpm",
   "author": "Stephen Zhou <hi@hyoban.cc>",
   "license": "MIT",
@@ -31,9 +31,6 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "bin": {
-    "release-it-pnpm": "dist/bin/index.js"
-  },
   "files": [
     "dist",
     "package.json"
@@ -70,20 +67,20 @@
   },
   "dependencies": {
     "bumpp": "^9.4.1",
-    "changelogithub": "^0.13.7",
+    "changelogithub": "^0.13.9",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "conventional-recommended-bump": "^10.0.0",
     "kolorist": "^1.8.0",
-    "semver": "^7.6.2"
+    "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@types/node": "20.12.12",
+    "@types/node": "20.14.11",
     "@types/semver": "^7.5.8",
-    "bunchee": "^5.1.5",
-    "eslint": "^9.2.0",
-    "eslint-config-hyoban": "^2.3.1",
-    "release-it": "^17.2.1",
-    "typescript": "^5.4.5",
-    "vitest": "^1.6.0"
+    "bunchee": "^5.2.2",
+    "eslint": "^9.7.0",
+    "eslint-config-hyoban": "3.0.0-beta.30",
+    "release-it": "^17.6.0",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.3"
   }
 }
