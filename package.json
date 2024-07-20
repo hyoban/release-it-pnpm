@@ -41,12 +41,13 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepublishOnly": "pnpm run build",
+    "release": "pnpm run build && release-it",
     "test": "vitest",
     "typecheck": "tsc"
   },
   "release-it": {
     "plugins": {
-      "./src/index.js": {
+      "./dist/index.js": {
         "inFile": "CHANGELOG.md"
       }
     },

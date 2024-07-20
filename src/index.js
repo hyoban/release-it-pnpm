@@ -8,6 +8,8 @@ import { blue, bold, cyan, dim, red, yellow } from 'kolorist'
 import { Plugin } from 'release-it'
 import semver from 'semver'
 
+import { fixChangelogTag } from './utils'
+
 const prompts = {
   publish: {
     type: 'confirm',
@@ -218,9 +220,11 @@ class ReleaseItPnpmPlugin extends Plugin {
       this.debug(err)
     }
 
+    const currentChangelog = fixChangelogTag(`## ${version}${changelog ? EOL + EOL + changelog.trim() : ''}`)
+
     fs.writeFileSync(
       inFile,
-      `${header + EOL + EOL}## ${version}${changelog ? EOL + EOL + changelog.trim() : ''}${previousChangelog ? EOL + EOL + previousChangelog.trim() : ''}${EOL}`,
+      `${header + EOL + EOL}${currentChangelog}${previousChangelog ? EOL + EOL + previousChangelog.trim() : ''}${EOL}`,
     )
 
     if (!hasInFile)
