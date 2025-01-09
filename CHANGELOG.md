@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.4
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Update deps &nbsp;-&nbsp; by **Stephen Zhou** [<samp>(8f8cd)</samp>](https://github.com/hyoban/release-it-pnpm/commit/8f8cd8a)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.6.3...4.6.4)
+
 ## 4.6.3
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
