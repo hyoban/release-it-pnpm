@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next",
+    "dev": "next --turbopack",
     "start": "next start"
   },
   "dependencies": {
     "next": "15.1.4",
-    "nextra": "^3.3.1",
-    "nextra-theme-docs": "^3.3.1",
+    "nextra": "4.0.0-rc.0",
+    "nextra-theme-docs": "4.0.0-rc.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }
