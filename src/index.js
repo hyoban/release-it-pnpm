@@ -232,7 +232,8 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async release() {
-    if (this.options?.pnpm?.disableRelease || !this.options?.github?.release) return
+    if (this.options?.pnpm?.disableRelease || !this.options?.github?.release) 
+      return
 
     await this.step({
       task: async () => {
