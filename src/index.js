@@ -232,7 +232,7 @@ class ReleaseItPnpmPlugin extends Plugin {
   }
 
   async release() {
-    if (this.options?.pnpm?.disableRelease || !this.options?.github?.release) 
+    if (this.options?.disableRelease || this.options?.pnpm?.disableRelease || !this.options?.github?.release)
       return
 
     await this.step({
