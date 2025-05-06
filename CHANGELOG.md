@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.6.5
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Consider disableRelease option from pnpm plugin node. &nbsp;-&nbsp; by **Beno** and **Stephen Zhou** in https://github.com/hyoban/release-it-pnpm/issues/25 [<samp>(b57d2)</samp>](https://github.com/hyoban/release-it-pnpm/commit/b57d222)
+- Relax peerDependencies, close #28 &nbsp;-&nbsp; by **Stephen Zhou** in https://github.com/hyoban/release-it-pnpm/issues/28 [<samp>(1b7bd)</samp>](https://github.com/hyoban/release-it-pnpm/commit/1b7bd2e)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.6.4...4.6.5)
+
 ## 4.6.4
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
