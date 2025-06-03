@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.6
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- GitHub release should be created when `github.release` is undefined &nbsp;-&nbsp; by **Kentaro Suzuki** in https://github.com/hyoban/release-it-pnpm/issues/32 [<samp>(12fc6)</samp>](https://github.com/hyoban/release-it-pnpm/commit/12fc69f)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/hyoban/release-it-pnpm/compare/4.6.5...4.6.6)
+
 ## 4.6.5
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
