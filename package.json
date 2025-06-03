@@ -40,6 +40,7 @@
     "dev": "bunchee --watch",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "prepare": "pnpm run build",
     "prepublishOnly": "pnpm run build",
     "release": "pnpm run build && release-it",
     "test": "vitest",
